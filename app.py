@@ -22,8 +22,9 @@ SUPPORT_FILE  = 'support.json'
 LOGS_FILE     = 'logs.json'
 UPLOAD_FOLDER = 'uploads'
 USER_DATA     = 'user_data'
+CONCILIACAO_FOLDER = 'conciliacao'
 
-for d in [UPLOAD_FOLDER, USER_DATA]:
+for d in [UPLOAD_FOLDER, USER_DATA, CONCILIACAO_FOLDER]:
     os.makedirs(d, exist_ok=True)
 
 ALLOWED = {'ofx','xlsx','xls','xlsm','csv','pdf'}
@@ -119,31 +120,31 @@ def require_admin():
 # ─────────────────────────────────────────────────────────────
 def categorizar(desc):
     d = str(desc).lower()
-    if any(x in d for x in ['salário','salario','holerite','folha','salário']):     return 'Salário/Renda'
-    if any(x in d for x in ['freelance','comissão','comissao','honorário']):        return 'Renda Extra'
+    if any(x in d for x in ['salário','salario','holerite','folha']):             return 'Salário/Renda'
+    if any(x in d for x in ['freelance','comissão','comissao','honorário']):      return 'Renda Extra'
     if any(x in d for x in ['pix recebid','ted recebid','transferência recebida',
-                              'depósito','deposito','estorno']):                     return 'Transferência Recebida'
-    if any(x in d for x in ['pix enviad','ted enviad','transferência enviada']):    return 'Transferência Enviada'
+                              'depósito','deposito','estorno']):                   return 'Transferência Recebida'
+    if any(x in d for x in ['pix enviad','ted enviad','transferência enviada']):  return 'Transferência Enviada'
     if any(x in d for x in ['aluguel','condomínio','condominio','iptu',
-                              'financiamento','prestação','prestacao']):             return 'Moradia'
+                              'financiamento','prestação','prestacao']):           return 'Moradia'
     if any(x in d for x in ['supermercado','mercado','hortifruti','açougue',
                               'padaria','restaurante','ifood','lanchonete',
-                              'alimentação','alimentacao','comida']):                return 'Alimentação'
+                              'alimentação','alimentacao','comida']):              return 'Alimentação'
     if any(x in d for x in ['uber','99 ','cabify','ônibus','onibus','metrô','metro',
                               'gasolina','combustível','combustivel','posto',
-                              'estacionamento','pedágio','pedagio']):                return 'Transporte'
+                              'estacionamento','pedágio','pedagio']):              return 'Transporte'
     if any(x in d for x in ['energia','água','agua','internet','telefone',
-                              'celular','claro','vivo','tim','net','gás','gas']):    return 'Contas & Serviços'
+                              'celular','claro','vivo','tim','net','gás','gas']):  return 'Contas & Serviços'
     if any(x in d for x in ['farmácia','farmacia','drogaria','médico','medico',
                               'hospital','plano de saúde','unimed','exame',
-                              'consulta','remédio','remedio']):                      return 'Saúde'
+                              'consulta','remédio','remedio']):                    return 'Saúde'
     if any(x in d for x in ['netflix','spotify','amazon','disney','hbo',
-                              'cinema','teatro','ingresso','show']):                 return 'Lazer'
+                              'cinema','teatro','ingresso','show']):               return 'Lazer'
     if any(x in d for x in ['curso','faculdade','escola','educação','educacao',
-                              'livro','livraria','mensalidade']):                    return 'Educação'
+                              'livro','livraria','mensalidade']):                  return 'Educação'
     if any(x in d for x in ['roupa','calçado','calcado','moda','loja','zara',
-                              'renner','riachuelo','shopping']):                     return 'Vestuário'
-    if any(x in d for x in ['imposto','taxa','multa','darf','irpf','irpj']):        return 'Impostos & Taxas'
+                              'renner','riachuelo','shopping']):                   return 'Vestuário'
+    if any(x in d for x in ['imposto','taxa','multa','darf','irpf','irpj']):      return 'Impostos & Taxas'
     return 'Outros'
 
 # ─────────────────────────────────────────────────────────────
@@ -168,12 +169,15 @@ def process_ofx(fp):
                 })
         return out
     except Exception as e:
-        add_log(f'Erro ao processar OFX: {e}', session.get('user','sistema'))
+        print(f'ERRO OFX: {e}')
         return []
 
 def process_excel(fp):
+    """Processa arquivo Excel/CSV e retorna lista de transações."""
     try:
         ext = fp.rsplit('.', 1)[-1].lower()
+        print(f'Processando arquivo: {fp} (ext: {ext})')
+        
         if ext == 'csv':
             df = pd.read_csv(fp, sep=None, engine='python', encoding='utf-8', errors='ignore')
         elif ext in ['xlsx','xlsm']:
@@ -181,30 +185,40 @@ def process_excel(fp):
         else:
             df = pd.read_excel(fp, engine='xlrd')
 
+        print(f'Colunas encontradas: {list(df.columns)}')
+        print(f'Total de linhas: {len(df)}')
+        
         df.columns = [str(c).strip().lower() for c in df.columns]
         col_d = next((c for c in df.columns if any(k in c for k in ['data','date','dt'])), None)
         col_v = next((c for c in df.columns if any(k in c for k in ['valor','value','amount','montante'])), None)
-        col_t = next((c for c in df.columns if any(k in c for k in ['descri','memo','histor','lançamento','lancamento','complement'])), None)
+        col_t = next((c for c in df.columns if any(k in c for k in ['descri','memo','histor','lançamento','lancamento','complement','nome'])), None)
+
+        print(f'Coluna data: {col_d}, Coluna valor: {col_v}, Coluna desc: {col_t}')
 
         out = []
-        for _, row in df.iterrows():
+        for idx, row in df.iterrows():
             v = 0.0
             if col_v:
                 try:
-                    raw = str(row[col_v]).replace('R$','').replace(' ','')
-                    # Suporte a formatos BR (1.234,56) e US (1,234.56)
-                    if ',' in raw and '.' in raw:
-                        if raw.rfind(',') > raw.rfind('.'):
-                            raw = raw.replace('.','').replace(',','.')
-                        else:
-                            raw = raw.replace(',','')
-                    elif ',' in raw:
-                        raw = raw.replace(',','.')
-                    v = float(raw)
-                except:
+                    raw = str(row[col_v]).replace('R$','').replace(' ','').strip()
+                    if raw == '' or raw == 'nan':
+                        v = 0.0
+                    else:
+                        if ',' in raw and '.' in raw:
+                            if raw.rfind(',') > raw.rfind('.'):
+                                raw = raw.replace('.','').replace(',','.')
+                            else:
+                                raw = raw.replace(',','')
+                        elif ',' in raw:
+                            raw = raw.replace(',','.')
+                        v = float(raw)
+                except Exception as e:
+                    print(f'Erro ao converter valor na linha {idx}: {row[col_v]} -> {e}')
                     v = 0.0
-            desc = str(row[col_t])[:120] if col_t else 'Sem descrição'
-            data = str(row[col_d])[:10] if col_d else 'N/A'
+            
+            desc = str(row[col_t])[:120] if col_t and str(row[col_t]) != 'nan' else 'Sem descrição'
+            data = str(row[col_d])[:10] if col_d and str(row[col_d]) != 'nan' else 'N/A'
+            
             out.append({
                 'data': data,
                 'descricao': desc,
@@ -213,9 +227,13 @@ def process_excel(fp):
                 'categoria': categorizar(desc),
                 'pago': False
             })
+        
+        print(f'Total de transações processadas: {len(out)}')
         return out
     except Exception as e:
-        add_log(f'Erro ao processar Excel/CSV: {e}', session.get('user','sistema'))
+        print(f'ERRO Excel/CSV: {e}')
+        import traceback
+        traceback.print_exc()
         return []
 
 # ─────────────────────────────────────────────────────────────
@@ -225,14 +243,23 @@ def get_dash(email):
     users = load_users()
     files = users.get(email, {}).get('files', [])
     txs   = []
+    
+    print(f'\n=== get_dash para {email} ===')
+    print(f'Arquivos encontrados: {len(files)}')
+    
     for fi in files:
         path = fi.get('path','')
-        if not os.path.exists(path): continue
+        print(f'  Arquivo: {fi.get("name","")} -> {path}')
+        if not os.path.exists(path):
+            print(f'    ARQUIVO NÃO ENCONTRADO: {path}')
+            continue
         ext = path.rsplit('.', 1)[-1].lower()
         if ext == 'ofx':
-            txs.extend(process_ofx(path))
+            resultado = process_ofx(path)
         else:
-            txs.extend(process_excel(path))
+            resultado = process_excel(path)
+        print(f'    Transações extraídas: {len(resultado)}')
+        txs.extend(resultado)
 
     rec  = sum(t['valor'] for t in txs if t['valor'] > 0)
     desp = sum(abs(t['valor']) for t in txs if t['valor'] < 0)
@@ -246,7 +273,6 @@ def get_dash(email):
         else:
             cat_r[cat] = cat_r.get(cat, 0) + t['valor']
 
-    # Dados mensais para gráfico
     por_mes = {}
     for t in txs:
         mes = t['data'][:7] if len(t['data']) >= 7 else t['data']
@@ -259,11 +285,11 @@ def get_dash(email):
 
     return {
         'transacoes':      txs,
-        'transactions':    txs,  # compatibilidade com templates antigos
+        'transactions':    txs,
         'total_receitas':  round(rec, 2),
-        'total_creditos':  round(rec, 2),  # compatibilidade
+        'total_creditos':  round(rec, 2),
         'total_despesas':  round(desp, 2),
-        'total_debitos':   round(desp, 2),  # compatibilidade
+        'total_debitos':   round(desp, 2),
         'saldo':           saldo,
         'status':          'Lucro' if saldo > 0 else ('Prejuízo' if saldo < 0 else 'Equilibrado'),
         'total_transacoes': len(txs),
@@ -277,7 +303,7 @@ def get_dash(email):
     }
 
 # ─────────────────────────────────────────────────────────────
-# EXCEL COMPLETO (mantido igual, só otimizado)
+# EXCEL COMPLETO
 # ─────────────────────────────────────────────────────────────
 def _brd():
     s = Side(style='thin', color='D0D0D0')
@@ -291,7 +317,6 @@ def _fnt(cor='1E293B', bold=False, size=10):
 
 def build_excel(data):
     G, GL, R, RL = '22a060','E8F8EF','C0392B','FDEDEC'
-    DARK, GRAY   = '1E293B','F4F6F8'
     wb  = Workbook()
     brd = _brd()
 
@@ -302,9 +327,8 @@ def build_excel(data):
     saldo = data['saldo']
     pct   = data['percentual_lucro']
     cats  = sorted(data['categorias'].items(), key=lambda x: x[1], reverse=True)
-    cats_r= sorted(data['categorias_rec'].items(), key=lambda x: x[1], reverse=True)
 
-    # ABA 1 — PAINEL RESUMO
+    # ABA 1 - PAINEL RESUMO
     ws = wb.active
     ws.title = 'Painel Resumo'
     ws.sheet_view.showGridLines = False
@@ -319,7 +343,7 @@ def build_excel(data):
     ws.merge_cells('A2:I2')
     ws['A2'].value = f'Gerado em {datetime.now().strftime("%d/%m/%Y as %H:%M")}   -   {data["qtd_transacoes"]} transacoes'
     ws['A2'].font  = _fnt('6B7280', size=10)
-    ws['A2'].fill  = _fill(GRAY)
+    ws['A2'].fill  = _fill('F4F6F8')
     ws['A2'].alignment = Alignment(horizontal='center', vertical='center')
 
     kpis = [
@@ -339,7 +363,6 @@ def build_excel(data):
     for col in 'ABCDEFGHI':
         ws.column_dimensions[col].width = 18
 
-    # Tabelas de categorias (código original mantido, só removi acentos)
     r = 7
     ws.merge_cells(f'A{r}:D{r}')
     ws[f'A{r}'].value = 'DESPESAS POR CATEGORIA'
@@ -362,7 +385,6 @@ def build_excel(data):
         r += 1
     cat_end = r - 1
 
-    # Gráfico pizza despesas
     if cats:
         pie = PieChart()
         pie.title = 'Despesas por Categoria'; pie.style = 10
@@ -414,7 +436,6 @@ def login():
 @app.route('/cadastro', methods=['GET','POST'])
 def cadastro():
     error = ''
-    success = ''
     if request.method == 'POST':
         nome  = request.form.get('nome','').strip()
         email = request.form.get('email','').strip().lower()
@@ -442,9 +463,11 @@ def cadastro():
                 }
                 save_users(users)
                 add_log('Novo cadastro', email)
-                flash('Conta criada com sucesso! Faça login.', 'success')
-                return redirect(url_for('login'))
-    return render_template('cadastro.html', error=error, success=success)
+                # LOGIN AUTOMÁTICO
+                session['user'] = email
+                flash(f'Bem-vindo(a), {nome}! Sua conta foi criada com sucesso.', 'success')
+                return redirect(url_for('dashboard'))
+    return render_template('cadastro.html', error=error)
 
 @app.route('/logout')
 def logout():
@@ -578,9 +601,6 @@ def configuracoes():
                 users[session['user']]['password'] = generate_password_hash(ns)
                 save_users(users)
                 success = 'Senha alterada com sucesso!'
-        elif acao == 'salvar_config':
-            # Configurações gerais (simplificado)
-            flash('Configurações salvas!', 'success')
     return render_template('Configurações.html',
                            **ctx,
                            active='admin_config',
@@ -608,7 +628,7 @@ def dashboard():
     # Paginação
     pagina = request.args.get('pagina', 1, type=int)
     por_pagina = 20
-    transacoes = dash.get('transactions', [])
+    transacoes = list(dash.get('transactions', []))
     total_paginas = max(1, (len(transacoes) + por_pagina - 1) // por_pagina)
     inicio = (pagina - 1) * por_pagina
     dash['transactions'] = transacoes[inicio:inicio + por_pagina]
@@ -622,23 +642,62 @@ def dashboard():
                            files=files,
                            has_data=has_data)
 
-@app.route('/conciliacao')
+@app.route('/conciliacao', methods=['GET','POST'])
 def conciliacao():
     redir = require_login()
     if redir: return redir
     ctx  = get_ctx()
+    
+    # Processar uploads de conciliação
+    if request.method == 'POST':
+        if 'arquivo_extrato' in request.files:
+            file = request.files['arquivo_extrato']
+            if file.filename != '':
+                fname = secure_filename(f"extrato_{session['user']}_{datetime.now().strftime('%Y%m%d%H%M%S')}_{file.filename}")
+                fpath = os.path.join(CONCILIACAO_FOLDER, fname)
+                file.save(fpath)
+                flash(f'Extrato "{file.filename}" carregado!', 'success')
+        
+        if 'arquivo_notas' in request.files:
+            file = request.files['arquivo_notas']
+            if file.filename != '':
+                fname = secure_filename(f"notas_{session['user']}_{datetime.now().strftime('%Y%m%d%H%M%S')}_{file.filename}")
+                fpath = os.path.join(CONCILIACAO_FOLDER, fname)
+                file.save(fpath)
+                flash(f'Notas "{file.filename}" carregadas!', 'success')
+    
+    # Buscar dados
     dash = get_dash(session['user'])
     rec  = [t for t in dash['transactions'] if t['valor'] > 0]
     desp = [t for t in dash['transactions'] if t['valor'] < 0]
 
-    # Simular extrato e notas para conciliação
     mes_selecionado = request.args.get('mes', '')
     if mes_selecionado:
         rec  = [t for t in rec if t['data'].startswith(mes_selecionado)]
         desp = [t for t in desp if t['data'].startswith(mes_selecionado)]
 
-    # Lista de meses disponíveis
     meses = sorted(set(t['data'][:7] for t in dash['transactions'] if len(t['data'])>=7))
+    
+    # Conciliação automática (mesmo valor = conciliado)
+    conciliados = 0
+    for r in rec:
+        for d in desp:
+            if abs(r['valor']) == abs(d['valor']):
+                conciliados += 1
+                break
+
+    total_itens = len(rec) + len(desp)
+    
+    # Recomendações
+    recomendacoes = []
+    if dash['saldo'] < 0:
+        recomendacoes.append('⚠️ Seu saldo está negativo. Reveja suas despesas.')
+    if dash['total_despesas'] > dash['total_receitas']:
+        recomendacoes.append('📉 Suas despesas superam as receitas. Crie um orçamento.')
+    if dash['percentual_lucro'] < 10:
+        recomendacoes.append('💡 Margem de lucro abaixo de 10%. Considere reduzir custos.')
+    if not recomendacoes:
+        recomendacoes.append('✅ Suas finanças estão saudáveis!')
 
     return render_template('conciliacao.html',
                            **ctx,
@@ -649,10 +708,11 @@ def conciliacao():
                            debitos=desp,
                            total_creditos=sum(t['valor'] for t in rec),
                            total_debitos=sum(abs(t['valor']) for t in desp),
-                           conciliados=0,
-                           total_itens=len(rec)+len(desp),
+                           conciliados=conciliados,
+                           total_itens=total_itens,
                            meses_disponiveis=meses,
-                           mes_selecionado=mes_selecionado)
+                           mes_selecionado=mes_selecionado,
+                           recomendacoes=recomendacoes)
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -735,12 +795,10 @@ def configuracoes_usuario():
             save_users(users)
             success = 'Preferências salvas!'
         else:
-            # Salvar dados pessoais
             users[session['user']]['nome'] = request.form.get('nome', user.get('nome','')).strip()
             users[session['user']]['whatsapp'] = request.form.get('whatsapp','').strip()
             save_users(users)
             success = 'Dados atualizados com sucesso!'
-
     return render_template('user_configuracoes.html',
                            **ctx,
                            active='config',
@@ -753,7 +811,6 @@ def suporte():
     redir = require_login()
     if redir: return redir
     ctx = get_ctx()
-    success = ''
     if request.method == 'POST':
         msg = request.form.get('mensagem','').strip()
         if msg:
@@ -769,7 +826,7 @@ def suporte():
             flash('Mensagem enviada com sucesso!', 'success')
         else:
             flash('Escreva uma mensagem.', 'warning')
-    return render_template('suporte.html', **ctx, active='suporte', success=success)
+    return render_template('suporte.html', **ctx, active='suporte')
 
 # ─────────────────────────────────────────────────────────────
 # ROTAS — DOWNLOADS
@@ -809,16 +866,16 @@ def download_conciliacao():
     G, GL, R, RL = '22a060','E8F8EF','C0392B','FDEDEC'
     brd = _brd()
 
+    # ABA RECEITAS
     ws1 = wb.active
     ws1.title = 'Receitas'
     ws1.sheet_view.showGridLines = False
     ws1['A1'].value = 'CONCILIACAO - RECEITAS'
     ws1['A1'].font = Font(name='Calibri', bold=True, size=14, color='FFFFFF')
     ws1['A1'].fill = _fill(G)
-    for i, h in enumerate(['Data','Descrição','Categoria','Valor (R$)'], 1):
+    for i, h in enumerate(['Data','Descricao','Categoria','Valor (R$)'], 1):
         c = ws1.cell(row=2, column=i, value=h)
         c.font = _fnt('FFFFFF', True, 11); c.fill = _fill(G); c.border = brd
-
     recs = [t for t in dash['transactions'] if t['valor'] > 0]
     for j, t in enumerate(recs):
         rr = j + 3
@@ -826,21 +883,39 @@ def download_conciliacao():
             c = ws1.cell(row=rr, column=ci, value=v)
             c.fill = _fill(GL if j%2==0 else 'FFFFFF'); c.border = brd
 
+    # ABA DESPESAS
     ws2 = wb.create_sheet('Despesas')
     ws2.sheet_view.showGridLines = False
     ws2['A1'].value = 'CONCILIACAO - DESPESAS'
     ws2['A1'].font = Font(name='Calibri', bold=True, size=14, color='FFFFFF')
     ws2['A1'].fill = _fill(R)
-    for i, h in enumerate(['Data','Descrição','Categoria','Valor (R$)'], 1):
+    for i, h in enumerate(['Data','Descricao','Categoria','Valor (R$)'], 1):
         c = ws2.cell(row=2, column=i, value=h)
         c.font = _fnt('FFFFFF', True, 11); c.fill = _fill(R); c.border = brd
-
     desps = [t for t in dash['transactions'] if t['valor'] < 0]
     for j, t in enumerate(desps):
         rr = j + 3
         for ci, v in enumerate([t['data'], t['descricao'][:60], t['categoria'], round(abs(t['valor']),2)], 1):
             c = ws2.cell(row=rr, column=ci, value=v)
             c.fill = _fill(RL if j%2==0 else 'FFFFFF'); c.border = brd
+
+    # ABA RESUMO
+    ws3 = wb.create_sheet('Resumo')
+    ws3.sheet_view.showGridLines = False
+    ws3['A1'].value = 'RESUMO DA CONCILIACAO'
+    ws3['A1'].font = Font(name='Calibri', bold=True, size=14, color='FFFFFF')
+    ws3['A1'].fill = _fill('1D4ED8')
+    dados_resumo = [
+        ('Total de Receitas', f'R$ {dash["total_receitas"]:,.2f}'),
+        ('Total de Despesas', f'R$ {dash["total_despesas"]:,.2f}'),
+        ('Saldo', f'R$ {dash["saldo"]:,.2f}'),
+        ('Total de Transacoes', str(dash['qtd_transacoes'])),
+        ('Margem de Lucro', f'{dash["percentual_lucro"]}%'),
+        ('Status', dash['status']),
+    ]
+    for i, (label, val) in enumerate(dados_resumo):
+        ws3.cell(row=i+3, column=1, value=label).font = Font(bold=True)
+        ws3.cell(row=i+3, column=2, value=val)
 
     for ws in [ws1, ws2]:
         for col, w in zip('ABCD', [13,50,22,14]):
@@ -852,8 +927,6 @@ def download_conciliacao():
                      as_attachment=True,
                      download_name=f'Conciliacao_{datetime.now().strftime("%Y%m%d")}.xlsx')
 
-# ─────────────────────────────────────────────────────────────
-# INICIALIZAÇÃO
 # ─────────────────────────────────────────────────────────────
 if __name__ == '__main__':
     print('\n' + '='*50)
