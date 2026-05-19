@@ -1,0 +1,488 @@
+[10/05/2026 03:31:25] ==================================================
+[10/05/2026 03:31:25] ATHOS DOWNLOAD - ASSINATURA (MAIO)
+[10/05/2026 03:31:25] ==================================================
+[10/05/2026 03:31:25] 10/05/2026 - Não é dia útil
+[11/05/2026 03:31:28] ==================================================
+[11/05/2026 03:31:28] ATHOS DOWNLOAD - ASSINATURA (MAIO)
+[11/05/2026 03:31:28] ==================================================
+[11/05/2026 03:31:28] Data hoje: 11/05/2026
+[11/05/2026 03:31:28] Baixando ligações de: 08/05/2026
+[11/05/2026 03:31:28] Pasta destino: MAIO 05\08
+[11/05/2026 03:31:30] 🔄 Fazendo login...
+[11/05/2026 03:31:31] ✔ Login realizado!
+[11/05/2026 03:31:32]    📄 Página 0: +24 (total: 24)
+[11/05/2026 03:31:34]    📄 Página 1: +0 (total: 24)
+[11/05/2026 03:31:35] ✅ 24 chamadas encontradas
+[11/05/2026 03:31:39]    ✅ BAIXADO: 69fe4d9ec769d66dce0feeec
+[11/05/2026 03:31:39]    ✅ BAIXADO: 69fe66355b5745ccc8088adb
+[11/05/2026 03:31:40]    ✅ BAIXADO: 69fe64ef3b7c4220c6008035
+[11/05/2026 03:31:42]    ✅ BAIXADO: 69fe3787a4478f3dfe0b018d
+[11/05/2026 03:31:42]    ✅ BAIXADO: 69fe51e17324f3cdc000a680
+[11/05/2026 03:31:42]    ✅ BAIXADO: 69fe43a481c35790550fae86
+[11/05/2026 03:31:43]    ⚠️ Status 404 para 69fe2b3e4a38fd32a203e792, tentativa 1/15
+[11/05/2026 03:31:45]    ✅ BAIXADO: 69fe2e500dbd4f88ff099895
+[11/05/2026 03:31:46]    ✅ BAIXADO: 69fe1e85513099df6c08b002
+[11/05/2026 03:31:46]    ⚠️ Status 404 para 69fe216b65bcfaf0b20fdcc2, tentativa 1/15
+[11/05/2026 03:31:46]    ✅ BAIXADO: 69fe233936ee66ad6b08be23
+[11/05/2026 03:31:47]    ⚠️ Status 404 para 69fe19b737261626f50dc914, tentativa 1/15
+[11/05/2026 03:31:48]    ⚠️ Status 404 para 69fe2b3e4a38fd32a203e792, tentativa 2/15
+[11/05/2026 03:31:51]    ✅ BAIXADO: 69fe0c7c3fa5738cc902f3fa
+[11/05/2026 03:31:51] Progresso: 10/24
+[11/05/2026 03:31:51]    ✅ BAIXADO: 69fe1409df092b277b0f4d6c
+[11/05/2026 03:31:52]    ✅ BAIXADO: 69fe216b65bcfaf0b20fdcc2
+[11/05/2026 03:31:52]    ⚠️ Status 404 para 69fe19b737261626f50dc914, tentativa 2/15
+[11/05/2026 03:32:55]    ⚠️ Tentativa 1/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 03:32:55]    ⚠️ Tentativa 1/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 03:32:56]    ⚠️ Tentativa 3/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 04:00:51]    ⚠️ Tentativa 2/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 04:00:51]    ⚠️ Tentativa 4/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 04:00:51]    ⚠️ Tentativa 2/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 04:30:51]    ⚠️ Tentativa 3/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 04:30:51]    ⚠️ Tentativa 5/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 04:30:51]    ⚠️ Tentativa 1/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 05:00:51]    ⚠️ Tentativa 4/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 05:00:51]    ⚠️ Tentativa 6/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 05:00:51]    ⚠️ Tentativa 4/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 05:00:51]    ⚠️ Tentativa 2/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 05:30:51]    ⚠️ Tentativa 3/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 05:30:52]    ⚠️ Tentativa 3/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 05:30:52]    ⚠️ Tentativa 5/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 05:30:52]    ⚠️ Tentativa 5/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 05:30:52]    ⚠️ Tentativa 7/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 05:31:24]    ⚠️ Tentativa 4/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 05:31:24]    ⚠️ Tentativa 6/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 05:31:24]    ⚠️ Tentativa 6/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 05:31:24]    ⚠️ Tentativa 4/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 06:30:52]    ⚠️ Tentativa 5/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 06:30:52]    ⚠️ Tentativa 7/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 06:30:52]    ⚠️ Tentativa 5/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 06:30:52]    ⚠️ Tentativa 7/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 07:00:52]    ⚠️ Tentativa 8/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 07:00:52]    ⚠️ Tentativa 6/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 07:00:52]    ⚠️ Tentativa 6/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 07:00:52]    ⚠️ Tentativa 10/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 07:35:28]    ⚠️ Tentativa 11/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 07:35:28]    ⚠️ Tentativa 7/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 07:35:28]    ⚠️ Tentativa 9/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 07:35:28]    ⚠️ Tentativa 9/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 07:36:31]    ⚠️ Tentativa 7/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Read timed out. (read timeout
+[11/05/2026 07:50:01]    ⚠️ Tentativa 12/15 - Erro: ('Connection aborted.', ConnectionAbortedError(10053, 'Uma conexão estabelecida 
+[11/05/2026 07:50:01]    ⚠️ Tentativa 8/15 - Erro: ('Connection aborted.', ConnectionAbortedError(10053, 'Uma conexão estabelecida 
+[11/05/2026 07:50:01]    ⚠️ Tentativa 10/15 - Erro: ('Connection aborted.', ConnectionAbortedError(10053, 'Uma conexão estabelecida 
+[11/05/2026 07:50:01]    ⚠️ Tentativa 10/15 - Erro: ('Connection aborted.', ConnectionAbortedError(10053, 'Uma conexão estabelecida 
+[11/05/2026 07:50:01]    ⚠️ Tentativa 8/15 - Erro: ('Connection aborted.', ConnectionAbortedError(10053, 'Uma conexão estabelecida 
+[11/05/2026 07:55:33]    ⚠️ Tentativa 11/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 07:55:33]    ⚠️ Tentativa 9/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 07:55:33]    ⚠️ Tentativa 9/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 07:55:33]    ⚠️ Tentativa 11/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 07:55:33]    ⚠️ Tentativa 13/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 08:01:24]    ⚠️ Tentativa 12/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 08:01:24]    ⚠️ Tentativa 10/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 08:01:24]    ⚠️ Tentativa 10/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 08:01:24]    ⚠️ Tentativa 12/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 08:01:24]    ⚠️ Tentativa 14/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 08:09:27]    ⚠️ Tentativa 13/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 08:09:27]    ⚠️ Tentativa 15/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 08:09:27]    ⚠️ Tentativa 11/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 08:09:27]    ⚠️ Tentativa 11/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 08:09:27]    ⚠️ Tentativa 13/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 08:12:07]    ❌ ERRO DEFINITIVO: 69fe2b3e4a38fd32a203e792 — esgotou 15 tentativas
+[11/05/2026 08:12:07]    ⚠️ Tentativa 14/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 08:12:07]    ⚠️ Tentativa 14/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 08:12:07]    ⚠️ Tentativa 12/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 08:12:07]    ⚠️ Tentativa 12/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 08:21:24]    ✅ BAIXADO: 69fde6de6499db2d9f0ec984
+[11/05/2026 09:21:27]    ⚠️ Tentativa 15/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 09:21:27]    ⚠️ Tentativa 1/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 09:21:27]    ⚠️ Tentativa 13/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 09:21:27]    ⚠️ Tentativa 13/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 09:21:27]    ⚠️ Tentativa 15/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 09:30:52]    ❌ ERRO DEFINITIVO: 69fdf130d622401a81075cb5 — esgotou 15 tentativas
+[11/05/2026 09:30:52]    ❌ ERRO DEFINITIVO: 69fdf5c48a95843bf0076cd0 — esgotou 15 tentativas
+[11/05/2026 09:30:52]    ⚠️ Tentativa 2/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 09:30:52]    ⚠️ Tentativa 14/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 09:30:52]    ⚠️ Tentativa 14/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 09:41:29]    ⚠️ Tentativa 3/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 09:41:29]    ⚠️ Tentativa 15/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 09:41:29]    ⚠️ Tentativa 15/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 09:41:37]    ❌ ERRO DEFINITIVO: 69fde77008de0b8c2b03b432 — esgotou 15 tentativas
+[11/05/2026 09:41:31]    ⚠️ Tentativa 1/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 09:41:31]    ⚠️ Tentativa 1/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 10:01:30]    ⚠️ Tentativa 4/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 10:21:31]    ⚠️ Tentativa 5/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 10:30:52]    ⚠️ Tentativa 6/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 10:32:29]    ⚠️ Tentativa 7/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+
+[11/05/2026 10:32:36]    ⚠️ Tentativa 2/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 10:32:36]    ⚠️ Tentativa 2/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[11/05/2026 10:32:41]    ⚠️ Status 404 para 69fdd204cd50704f5804316e, tentativa 2/15
+[11/05/2026 10:32:42]    ⚠️ Status 404 para 69fdd25e727445817d040d93, tentativa 2/15
+[11/05/2026 10:32:42]    ⚠️ Status 404 para 69fddd9df7d0a6f85f046c2e, tentativa 3/15
+[11/05/2026 10:32:42]    ✅ BAIXADO: 69fde4035ed84c69280a9c85
+[11/05/2026 10:33:28]    ⚠️ Status 404 para 69fde23bd6c6cf3f43073493, tentativa 3/15
+[11/05/2026 10:33:37]    ⚠️ Tentativa 1/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[11/05/2026 10:33:42]    ✅ BAIXADO: 69fdd204cd50704f5804316e
+[11/05/2026 10:33:42]    ⚠️ Status 404 para 69fddd9df7d0a6f85f046c2e, tentativa 4/15
+[11/05/2026 10:33:42] Progresso: 20/24
+[11/05/2026 10:33:44]    ⚠️ Status 404 para 69fdce1b7c14fb62ee0682ca, tentativa 2/15
+[11/05/2026 10:33:45]    ✅ BAIXADO: 69fdd25e727445817d040d93
+[11/05/2026 10:33:45]    ✅ BAIXADO: 69fde23bd6c6cf3f43073493
+[11/05/2026 10:33:48]    ✅ BAIXADO: 69fddd9df7d0a6f85f046c2e
+[11/05/2026 10:33:50]    ✅ BAIXADO: 69fdce1b7c14fb62ee0682ca
+[11/05/2026 10:33:50] Progresso: 24/24
+[11/05/2026 10:33:50] ==================================================
+[11/05/2026 10:33:50] ✅ DOWNLOAD CONCLUÍDO!
+[11/05/2026 10:33:50]    OK: 19 | Existia: 0 | Erros: 5
+[11/05/2026 10:33:50] ⚠️ IDs com erro (5): 69fe2b3e4a38fd32a203e792, 69fdf130d622401a81075cb5, 69fdf5c48a95843bf0076cd0, 69fe19b737261626f50dc914, 69fde77008de0b8c2b03b432
+[11/05/2026 10:33:50] 📁 Pasta: MAIO 05\08
+[11/05/2026 10:33:50] ==================================================
+[12/05/2026 08:00:03] ==================================================
+[12/05/2026 08:00:03] ATHOS DOWNLOAD - ASSINATURA (MAIO)
+[12/05/2026 08:00:03] ==================================================
+[12/05/2026 08:00:03] Data hoje: 12/05/2026
+[12/05/2026 08:00:03] Baixando ligações de: 11/05/2026
+[12/05/2026 08:00:03] Pasta destino: MAIO 05\011
+[12/05/2026 08:00:04] 🔄 Fazendo login...
+[12/05/2026 08:00:04] ✔ Login realizado!
+[12/05/2026 08:00:05]    📄 Página 0: +31 (total: 31)
+[12/05/2026 08:00:07]    📄 Página 1: +0 (total: 31)
+[12/05/2026 08:00:07] ✅ 31 chamadas encontradas
+[12/05/2026 08:00:11]    ✅ BAIXADO: 6a0236be1f4d91307700d286
+[12/05/2026 08:00:11]    ✅ BAIXADO: 6a0221465e41f627a80eb210
+[12/05/2026 08:00:11]    ✅ BAIXADO: 6a0251412fd792cfa40ec98e
+[12/05/2026 08:00:11]    ✅ BAIXADO: 6a025368d8ecd0d8dc083755
+[12/05/2026 08:00:13]    ✅ BAIXADO: 6a02231e062ab0eb250306fb
+[12/05/2026 08:00:13]    ✅ BAIXADO: 6a020ef630fefce540033655
+[12/05/2026 08:00:14]    ✅ BAIXADO: 6a021b9638410bc09e015978
+[12/05/2026 08:00:14]    ✅ BAIXADO: 6a021a1208918930460ff057
+[12/05/2026 08:00:17]    ✅ BAIXADO: 6a01feba86fbb76b0f0dd952
+[12/05/2026 08:00:17]    ⚠️ Status 404 para 6a0211b468a1925fa404290f, tentativa 1/15
+[12/05/2026 08:00:17]    ✅ BAIXADO: 6a020e852392acf3a504a293
+[12/05/2026 08:00:17] Progresso: 10/31
+[12/05/2026 08:00:19]    ✅ BAIXADO: 6a02023f3578ec98250c6251
+[12/05/2026 08:00:19]    ✅ BAIXADO: 6a020015929a52902a049be6
+[12/05/2026 08:00:19]    ✅ BAIXADO: 6a01fe6518e497c6e60e9d52
+[12/05/2026 08:00:20]    ✅ BAIXADO: 6a01f34ca90e3b3f6b01d9fd
+[12/05/2026 08:00:21]    ✅ BAIXADO: 6a01f2bd10ffa559280e5c86
+[12/05/2026 08:00:22]    ✅ BAIXADO: 6a01edde65c9c6808502c9ca
+[12/05/2026 08:00:24]    ✅ BAIXADO: 6a01eb177f70e910540b435d
+[12/05/2026 08:00:25]    ✅ BAIXADO: 6a01ea9a5e877466ec01477b
+[12/05/2026 08:00:26]    ✅ BAIXADO: 6a01f23a6971c7a51b0a7911
+[12/05/2026 08:00:27]    ✅ BAIXADO: 6a01e9c4bf66e153900e62c0
+[12/05/2026 08:00:27] Progresso: 20/31
+[12/05/2026 08:00:28]    ✅ BAIXADO: 6a01e98a7ed760c0bc06654c
+[12/05/2026 08:00:28]    ✅ BAIXADO: 6a01e85cffb74e137602da48
+[12/05/2026 08:00:29]    ✅ BAIXADO: 6a01e591eff90a42ca02a3d0
+[12/05/2026 08:00:30]    ✅ BAIXADO: 6a0211b468a1925fa404290f
+[12/05/2026 08:00:31]    ✅ BAIXADO: 6a01e040081943a97607f603
+[12/05/2026 08:00:31]    ⚠️ Status 404 para 6a01da8914b579831a047b38, tentativa 1/15
+[12/05/2026 08:00:31]    ✅ BAIXADO: 6a01d8b0adc3779ef503e40f
+[12/05/2026 08:00:33]    ⚠️ Status 404 para 6a01cb797c8a2e7b9805d53b, tentativa 1/15
+[12/05/2026 08:00:34]    ✅ BAIXADO: 6a01c2152b2a068a130952a2
+[12/05/2026 08:00:35]    ✅ BAIXADO: 6a01d9394d4b8482a60eb9a0
+[12/05/2026 08:00:36]    ✅ BAIXADO: 6a01baa010f726da89081869
+[12/05/2026 08:00:36]    ✅ BAIXADO: 6a01da8914b579831a047b38
+[12/05/2026 08:00:36] Progresso: 30/31
+[12/05/2026 08:00:38]    ⚠️ Status 404 para 6a01cb797c8a2e7b9805d53b, tentativa 2/15
+[12/05/2026 08:00:42]    ⚠️ Status 422 para 6a01cb797c8a2e7b9805d53b, tentativa 3/15
+[12/05/2026 08:00:48]    ✅ BAIXADO: 6a01cb797c8a2e7b9805d53b
+[12/05/2026 08:00:48] Progresso: 31/31
+[12/05/2026 08:00:48] ==================================================
+[12/05/2026 08:00:48] ✅ DOWNLOAD CONCLUÍDO!
+[12/05/2026 08:00:48]    OK: 31 | Existia: 0 | Erros: 0
+[12/05/2026 08:00:48] 📁 Pasta: MAIO 05\011
+[12/05/2026 08:00:48] ==================================================
+[13/05/2026 08:00:03] ==================================================
+[13/05/2026 08:00:03] ATHOS DOWNLOAD - ASSINATURA (MAIO)
+[13/05/2026 08:00:03] ==================================================
+[13/05/2026 08:00:03] Data hoje: 13/05/2026
+[13/05/2026 08:00:03] Baixando ligações de: 12/05/2026
+[13/05/2026 08:00:03] Pasta destino: MAIO 05\012
+[13/05/2026 08:00:03] 🔄 Fazendo login...
+[13/05/2026 08:00:04] ✔ Login realizado!
+[13/05/2026 08:00:05]    📄 Página 0: +23 (total: 23)
+[13/05/2026 08:00:07]    📄 Página 1: +0 (total: 23)
+[13/05/2026 08:00:08] ✅ 23 chamadas encontradas
+[13/05/2026 08:00:10]    ✅ BAIXADO: 6a0387ab35b8216e2002ea3f
+[13/05/2026 08:00:11]    ✅ BAIXADO: 6a03a709ca68b39cb20335cf
+[13/05/2026 08:00:11]    ✅ BAIXADO: 6a03a193075810d0b2076ddb
+[13/05/2026 08:00:11]    ✅ BAIXADO: 6a03785c22670d1f420c15d9
+[13/05/2026 08:00:13]    ✅ BAIXADO: 6a038c5db08b15c03d08d0b9
+[13/05/2026 08:00:14]    ✅ BAIXADO: 6a036c5e0778638f210c0cec
+[13/05/2026 08:00:15]    ✅ BAIXADO: 6a0350f3c2fda6b77809dc69
+[13/05/2026 08:00:16]    ✅ BAIXADO: 6a034ffaec7dbeee7d079504
+[13/05/2026 08:00:16]    ✅ BAIXADO: 6a0350e093104126200ac7b7
+[13/05/2026 08:00:16]    ✅ BAIXADO: 6a034f18f47612568a082f0c
+[13/05/2026 08:00:16] Progresso: 10/23
+[13/05/2026 08:00:17]    ✅ BAIXADO: 6a0344e5963fedbc980befb3
+[13/05/2026 08:00:18]    ✅ BAIXADO: 6a033c29bc289b19070e4f1e
+[13/05/2026 08:00:19]    ✅ BAIXADO: 6a033bca88b7797b8c0356f5
+[13/05/2026 08:00:19]    ✅ BAIXADO: 6a032b707dbea490690ad427
+[13/05/2026 08:00:19]    ✅ BAIXADO: 6a033f04fa615a1dcd0372c2
+[13/05/2026 08:00:22]    ✅ BAIXADO: 6a0325657ac625d5800b13fc
+[13/05/2026 08:00:22]    ✅ BAIXADO: 6a0322cd2ca05fe3a307c089
+[13/05/2026 08:00:22]    ✅ BAIXADO: 6a031aa6c686d067c20f7b11
+[13/05/2026 08:00:22]    ✅ BAIXADO: 6a032012a84b64c33d0d1b14
+[13/05/2026 08:00:22]    ✅ BAIXADO: 6a032aa833e4c5caf30095c4
+[13/05/2026 08:00:22] Progresso: 20/23
+[13/05/2026 08:00:25]    ✅ BAIXADO: 6a031055897aff2c7e01727c
+[13/05/2026 08:00:26]    ✅ BAIXADO: 6a0315bc60da8b1e890d7b36
+[13/05/2026 08:00:26]    ✅ BAIXADO: 6a031483f7acb730d80e3ff4
+[13/05/2026 08:00:26] Progresso: 23/23
+[13/05/2026 08:00:26] ==================================================
+[13/05/2026 08:00:26] ✅ DOWNLOAD CONCLUÍDO!
+[13/05/2026 08:00:26]    OK: 23 | Existia: 0 | Erros: 0
+[13/05/2026 08:00:26] 📁 Pasta: MAIO 05\012
+[13/05/2026 08:00:26] ==================================================
+[14/05/2026 10:32:57] ==================================================
+[14/05/2026 10:32:57] ATHOS DOWNLOAD - ASSINATURA (MAIO)
+[14/05/2026 10:32:57] ==================================================
+[14/05/2026 10:32:57] Data hoje: 14/05/2026
+[14/05/2026 10:32:57] Baixando ligações de: 13/05/2026
+[14/05/2026 10:32:57] Pasta destino: MAIO 05\013
+[14/05/2026 10:33:27] 🔄 Fazendo login...
+[14/05/2026 10:33:29] ✔ Login realizado!
+[14/05/2026 10:33:31]    📄 Página 0: +21 (total: 21)
+[14/05/2026 10:33:33]    📄 Página 1: +0 (total: 21)
+[14/05/2026 10:33:34] ✅ 21 chamadas encontradas
+[14/05/2026 10:33:37]    ⚠️ Status 404 para 6a04cef78d570099b50ec982, tentativa 1/15
+[14/05/2026 10:33:37]    ✅ BAIXADO: 6a04fdc60d9aee6c39015042
+[14/05/2026 10:33:37]    ⚠️ Status 422 para 6a04cd3ad26517d33c0ba115, tentativa 1/15
+[14/05/2026 10:33:38]    ⚠️ Status 404 para 6a04dc98df84afe96f0421a6, tentativa 1/15
+[14/05/2026 10:33:39]    ✅ BAIXADO: 6a04fe39d211b9a142009f9a
+[14/05/2026 10:33:39]    ✅ BAIXADO: 6a04c4c6a0b9bc021306fcf1
+[14/05/2026 10:33:41]    ✅ BAIXADO: 6a04b91db1ef133e4908dc44
+[14/05/2026 10:33:41]    ⚠️ Status 422 para 6a04cef78d570099b50ec982, tentativa 2/15
+[14/05/2026 10:33:41]    ⚠️ Status 404 para 6a04a4b9c65eb30b1f00c5e7, tentativa 1/15
+[14/05/2026 10:33:43]    ✅ BAIXADO: 6a04cd3ad26517d33c0ba115
+[14/05/2026 10:33:45]    ✅ BAIXADO: 6a04dc98df84afe96f0421a6
+[14/05/2026 10:33:46]    ⚠️ Status 422 para 6a04a4b9c65eb30b1f00c5e7, tentativa 2/15
+[14/05/2026 10:33:46]    ✅ BAIXADO: 6a04997ca75f0b8f8506b88f
+[14/05/2026 10:33:46]    ⚠️ Status 404 para 6a04cef78d570099b50ec982, tentativa 3/15
+[14/05/2026 10:33:47]    ✅ BAIXADO: 6a048844e58745e16f0fc274
+[14/05/2026 10:33:48]    ✅ BAIXADO: 6a048f8af2f4b733180fb2bd
+[14/05/2026 10:33:48]    ⚠️ Status 404 para 6a0487a77b71e5981c0c1521, tentativa 1/15
+[14/05/2026 10:33:49]    ⚠️ Status 404 para 6a04815ef96835d5950628a4, tentativa 1/15
+[14/05/2026 10:33:50]    ⚠️ Status 404 para 6a04a4b9c65eb30b1f00c5e7, tentativa 3/15
+[14/05/2026 10:33:51]    ✅ BAIXADO: 6a047cf6eaa499594402ceba
+[14/05/2026 10:33:51] Progresso: 10/21
+[14/05/2026 10:33:51]    ✅ BAIXADO: 6a04cef78d570099b50ec982
+[14/05/2026 10:33:54]    ⚠️ Status 422 para 6a04a4b9c65eb30b1f00c5e7, tentativa 4/15
+[14/05/2026 10:33:55]    ⚠️ Status 404 para 6a0478778e65c6a8d3068f83, tentativa 1/15
+[14/05/2026 10:33:55]    ⚠️ Status 404 para 6a0487a77b71e5981c0c1521, tentativa 2/15
+[14/05/2026 10:33:55]    ⚠️ Status 404 para 6a047b8116ee3b8de8080f38, tentativa 1/15
+[14/05/2026 10:33:57]    ✅ BAIXADO: 6a04815ef96835d5950628a4
+[14/05/2026 10:34:00]    ✅ BAIXADO: 6a0470c6663093393a057c32
+[14/05/2026 10:34:00]    ⚠️ Status 404 para 6a04a4b9c65eb30b1f00c5e7, tentativa 5/15
+[14/05/2026 10:34:01]    ✅ BAIXADO: 6a0487a77b71e5981c0c1521
+[14/05/2026 10:34:01]    ✅ BAIXADO: 6a0478778e65c6a8d3068f83
+[14/05/2026 10:34:01]    ✅ BAIXADO: 6a047b8116ee3b8de8080f38
+[14/05/2026 10:34:01]    ⚠️ Status 404 para 6a046e12c9adbf3cf4064530, tentativa 1/15
+[14/05/2026 10:34:10]    ⚠️ Status 404 para 6a045d9250748ecd9909ac90, tentativa 1/15
+[14/05/2026 10:34:10]    ✅ BAIXADO: 6a0467fd232acd101e01710f
+[14/05/2026 10:34:10]    ✅ BAIXADO: 6a0460867046c9a06d0205f6
+[14/05/2026 10:34:12]    ⚠️ Status 404 para 6a046e12c9adbf3cf4064530, tentativa 2/15
+[14/05/2026 10:34:12]    ✅ BAIXADO: 6a04a4b9c65eb30b1f00c5e7
+[14/05/2026 10:34:16]    ⚠️ Status 422 para 6a046e12c9adbf3cf4064530, tentativa 3/15
+[14/05/2026 10:34:19]    ✅ BAIXADO: 6a045d9250748ecd9909ac90
+[14/05/2026 10:34:19] Progresso: 20/21
+[14/05/2026 10:34:28]    ✅ BAIXADO: 6a046e12c9adbf3cf4064530
+[14/05/2026 10:34:28] Progresso: 21/21
+[14/05/2026 10:34:28] ==================================================
+[14/05/2026 10:34:28] ✅ DOWNLOAD CONCLUÍDO!
+[14/05/2026 10:34:28]    OK: 21 | Existia: 0 | Erros: 0
+[14/05/2026 10:34:28] 📁 Pasta: MAIO 05\013
+[14/05/2026 10:34:28] ==================================================
+[15/05/2026 08:00:12] ==================================================
+[15/05/2026 08:00:12] ATHOS DOWNLOAD - ASSINATURA (MAIO)
+[15/05/2026 08:00:12] ==================================================
+[15/05/2026 08:00:12] Data hoje: 15/05/2026
+[15/05/2026 08:00:12] Baixando ligações de: 14/05/2026
+[15/05/2026 08:00:12] Pasta destino: MAIO 05\014
+[15/05/2026 08:00:13] 🔄 Fazendo login...
+[15/05/2026 08:00:14] ✔ Login realizado!
+[15/05/2026 08:00:16]    📄 Página 0: +23 (total: 23)
+[15/05/2026 08:00:18]    📄 Página 1: +0 (total: 23)
+[15/05/2026 08:00:19] ✅ 23 chamadas encontradas
+[15/05/2026 08:00:23]    ✅ BAIXADO: 6a063fcfcb32bc618f0120c9
+[15/05/2026 08:00:24]    ✅ BAIXADO: 6a064e9c79be4db26a05e60a
+[15/05/2026 08:00:24]    ✅ BAIXADO: 6a063ddbcdb11b4dc20947b1
+[15/05/2026 08:00:24]    ✅ BAIXADO: 6a0649f4fd99f730a60cf56e
+[15/05/2026 08:00:24]    ✅ BAIXADO: 6a06456695c945962705e570
+[15/05/2026 08:00:27]    ✅ BAIXADO: 6a063975eff6912ae800bb4f
+[15/05/2026 08:00:27]    ✅ BAIXADO: 6a063363f6555668310697c6
+[15/05/2026 08:00:27]    ✅ BAIXADO: 6a062c53d8278da5fb0cb347
+[15/05/2026 08:00:27]    ✅ BAIXADO: 6a062eec0ae1a3e285073791
+[15/05/2026 08:00:28]    ✅ BAIXADO: 6a063e1142b76c440e0f232b
+[15/05/2026 08:00:28] Progresso: 10/23
+[15/05/2026 08:00:30]    ✅ BAIXADO: 6a06279a19aba9db05045ab4
+[15/05/2026 08:00:31]    ✅ BAIXADO: 6a06250988fb676611064dad
+[15/05/2026 08:00:31]    ✅ BAIXADO: 6a06235f3d8ca890fa09d8a1
+[15/05/2026 08:00:31]    ✅ BAIXADO: 6a06268d49fd1d3b88082bc4
+[15/05/2026 08:00:32]    ✅ BAIXADO: 6a06268dcb170a54c00afc21
+[15/05/2026 08:00:32]    ✅ BAIXADO: 6a0619f9cc5a7f822e08a431
+[15/05/2026 08:00:33]    ✅ BAIXADO: 6a0612f5014a99caaa07cbf7
+[15/05/2026 08:00:34]    ✅ BAIXADO: 6a05c8f0631f03cc3702546d
+[15/05/2026 08:00:36]    ✅ BAIXADO: 6a05b74dcd286fa7f90476bb
+[15/05/2026 08:00:36]    ✅ BAIXADO: 6a05e3a322e1d07c6b0da808
+[15/05/2026 08:00:36] Progresso: 20/23
+[15/05/2026 08:00:36]    ✅ BAIXADO: 6a0602aacdc6b3df390e7364
+[15/05/2026 08:00:36]    ✅ BAIXADO: 6a05b4926a8a79c4fe0a399f
+[15/05/2026 08:00:39]    ✅ BAIXADO: 6a05ae4fe7a15faebb0cf534
+[15/05/2026 08:00:39] Progresso: 23/23
+[15/05/2026 08:00:39] ==================================================
+[15/05/2026 08:00:39] ✅ DOWNLOAD CONCLUÍDO!
+[15/05/2026 08:00:39]    OK: 23 | Existia: 0 | Erros: 0
+[15/05/2026 08:00:39] 📁 Pasta: MAIO 05\014
+[15/05/2026 08:00:39] ==================================================
+[16/05/2026 10:38:53] ==================================================
+[16/05/2026 10:38:53] ATHOS DOWNLOAD - ASSINATURA (MAIO)
+[16/05/2026 10:38:53] ==================================================
+[16/05/2026 10:38:53] 16/05/2026 - Não é dia útil
+[18/05/2026 03:20:39] ==================================================
+[18/05/2026 03:20:39] ATHOS DOWNLOAD - ASSINATURA (MAIO)
+[18/05/2026 03:20:39] ==================================================
+[18/05/2026 03:20:39] Data hoje: 18/05/2026
+[18/05/2026 03:20:39] Baixando ligações de: 15/05/2026
+[18/05/2026 03:20:39] Pasta destino: MAIO 05\015
+[18/05/2026 03:20:42] 🔄 Fazendo login...
+[18/05/2026 03:20:44] ✔ Login realizado!
+[18/05/2026 03:20:46]    📄 Página 0: +21 (total: 21)
+[18/05/2026 03:20:48]    📄 Página 1: +0 (total: 21)
+[18/05/2026 03:20:49] ✅ 21 chamadas encontradas
+[18/05/2026 03:20:53]    ✅ BAIXADO: 6a07a1974011a750240240fc
+[18/05/2026 03:20:53]    ✅ BAIXADO: 6a079fc4334dd9ade1055aff
+[18/05/2026 03:20:53]    ✅ BAIXADO: 6a0797a07d1eafe1ca007ff4
+[18/05/2026 03:20:54]    ✅ BAIXADO: 6a07a26c43a1de1331082c3c
+[18/05/2026 03:20:55]    ⚠️ Status 404 para 6a07968a6874789cb70e2dc3, tentativa 1/15
+[18/05/2026 03:20:55]    ✅ BAIXADO: 6a079bd45bd8f0094504464b
+[18/05/2026 03:20:56]    ⚠️ Status 404 para 6a078abf370a2d683906f810, tentativa 1/15
+[18/05/2026 03:20:56]    ✅ BAIXADO: 6a079150f672a5914c02b0b4
+[18/05/2026 03:20:56]    ⚠️ Status 404 para 6a0789d5ca2353637c05f5ea, tentativa 1/15
+[18/05/2026 03:20:58]    ✅ BAIXADO: 6a0787d23642614d10027bc4
+[18/05/2026 03:20:58]    ⚠️ Status 404 para 6a077d5d03e47dc1d10368ee, tentativa 1/15
+[18/05/2026 03:21:01]    ✅ BAIXADO: 6a07968a6874789cb70e2dc3
+[18/05/2026 03:21:01]    ✅ BAIXADO: 6a07785982e968284b0257b2
+[18/05/2026 03:21:01]    ✅ BAIXADO: 6a078abf370a2d683906f810
+[18/05/2026 03:21:01] Progresso: 10/21
+[18/05/2026 03:21:01]    ✅ BAIXADO: 6a0789d5ca2353637c05f5ea
+[18/05/2026 03:21:03]    ⚠️ Status 404 para 6a077375a54d86d8610f1e6f, tentativa 1/15
+[18/05/2026 03:21:04]    ✅ BAIXADO: 6a0755f47768d04f26075612
+[18/05/2026 03:21:04]    ✅ BAIXADO: 6a0757d117adcd28e30636a0
+[18/05/2026 03:21:05]    ✅ BAIXADO: 6a07522a504c54a52a0dcea7
+[18/05/2026 03:21:06]    ✅ BAIXADO: 6a077d5d03e47dc1d10368ee
+[18/05/2026 03:21:07]    ⚠️ Status 404 para 6a07443c048a2f6d4004f061, tentativa 1/15
+[18/05/2026 03:21:07]    ✅ BAIXADO: 6a0729f8593dd6ea4702f725
+[18/05/2026 03:21:08]    ⚠️ Status 404 para 6a077375a54d86d8610f1e6f, tentativa 2/15
+[18/05/2026 03:21:09]    ⚠️ Status 404 para 6a0710c8d50dbbe25d041987, tentativa 1/15
+[18/05/2026 03:21:09]    ⚠️ Status 404 para 6a07175597f9aa5446044653, tentativa 1/15
+[18/05/2026 03:21:10]    ⚠️ Status 404 para 6a07032fb9473663b5026527, tentativa 1/15
+[18/05/2026 03:21:11]    ⚠️ Status 422 para 6a07443c048a2f6d4004f061, tentativa 2/15
+[18/05/2026 03:21:12]    ⚠️ Status 422 para 6a077375a54d86d8610f1e6f, tentativa 3/15
+[18/05/2026 03:21:15]    ✅ BAIXADO: 6a0710c8d50dbbe25d041987
+[18/05/2026 03:21:15]    ⚠️ Status 404 para 6a07175597f9aa5446044653, tentativa 2/15
+[18/05/2026 03:48:11]    ⚠️ Tentativa 3/15 - Erro: ("Connection broken: ConnectionResetError(10054, 'Foi forçado o cancelamento de 
+[18/05/2026 05:40:11]    ⚠️ Tentativa 4/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[18/05/2026 06:08:11]    ⚠️ Tentativa 3/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[18/05/2026 06:08:11]    ⚠️ Tentativa 5/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[18/05/2026 06:08:38]    ⚠️ Tentativa 3/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[18/05/2026 06:08:38]    ⚠️ Tentativa 4/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[18/05/2026 06:08:42]    ✅ BAIXADO: 6a077375a54d86d8610f1e6f
+[18/05/2026 07:24:48]    ⚠️ Tentativa 4/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[18/05/2026 07:37:03]    ⚠️ Tentativa 5/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[18/05/2026 07:43:09]    ⚠️ Tentativa 6/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[18/05/2026 07:51:12]    ⚠️ Tentativa 4/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Read timed out. (read timeout
+[18/05/2026 07:59:12]    ⚠️ Tentativa 5/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Read timed out. (read timeout
+[18/05/2026 08:38:30]    ⚠️ Tentativa 7/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Read timed out. (read timeout
+[18/05/2026 09:04:40]    ⚠️ Tentativa 6/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[18/05/2026 09:05:11]    ⚠️ Tentativa 8/15 - Erro: ('Connection aborted.', ConnectionAbortedError(10053, 'Uma conexão estabelecida 
+[18/05/2026 09:09:44]    ⚠️ Tentativa 5/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[18/05/2026 09:10:30]    ⚠️ Tentativa 7/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[18/05/2026 09:17:44]    ⚠️ Tentativa 9/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[18/05/2026 09:17:45]    ⚠️ Tentativa 6/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[18/05/2026 09:24:42]    ⚠️ Tentativa 8/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[18/05/2026 09:33:44]    ⚠️ Tentativa 7/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[18/05/2026 09:33:44]    ⚠️ Tentativa 10/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[18/05/2026 09:33:45]    ⚠️ Tentativa 9/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[18/05/2026 09:38:30]    ⚠️ Tentativa 11/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[18/05/2026 09:38:30]    ⚠️ Tentativa 8/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[18/05/2026 09:38:30]    ⚠️ Tentativa 10/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[18/05/2026 09:39:02]    ⚠️ Tentativa 9/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[18/05/2026 09:39:02]    ⚠️ Tentativa 12/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[18/05/2026 09:39:02]    ⚠️ Tentativa 11/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[18/05/2026 09:58:40]    ⚠️ Tentativa 10/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[18/05/2026 09:58:40]    ⚠️ Tentativa 12/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[18/05/2026 09:59:07]    ✅ BAIXADO: 6a07443c048a2f6d4004f061
+[18/05/2026 09:59:09]    ⚠️ Tentativa 11/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[18/05/2026 10:13:06]    ⚠️ Tentativa 12/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[18/05/2026 10:29:02]    ✅ BAIXADO: 6a07175597f9aa5446044653
+[18/05/2026 10:29:02] Progresso: 20/21
+[18/05/2026 10:32:47]    ⚠️ Tentativa 13/15 - Erro: ('Connection aborted.', ConnectionResetError(10054, 'Foi forçado o cancelamento 
+[18/05/2026 10:34:14]    ⚠️ Tentativa 14/15 - Erro: HTTPSConnectionPool(host='app.3c.plus', port=443): Max retries exceeded with url
+[18/05/2026 10:34:27]    ✅ BAIXADO: 6a07032fb9473663b5026527
+[18/05/2026 10:34:27] Progresso: 21/21
+[18/05/2026 10:34:27] ==================================================
+[18/05/2026 10:34:27] ✅ DOWNLOAD CONCLUÍDO!
+[18/05/2026 10:34:27]    OK: 21 | Existia: 0 | Erros: 0
+[18/05/2026 10:34:27] 📁 Pasta: MAIO 05\015
+[18/05/2026 10:34:27] ==================================================
+[19/05/2026 12:03:30] ==================================================
+[19/05/2026 12:03:30] ATHOS DOWNLOAD - ASSINATURA (MAIO)
+[19/05/2026 12:03:30] ==================================================
+[19/05/2026 12:03:30] Data hoje: 19/05/2026
+[19/05/2026 12:03:30] Baixando ligações de: 18/05/2026
+[19/05/2026 12:03:30] Pasta destino: MAIO 05\018
+[19/05/2026 12:03:37] 🔄 Fazendo login...
+[19/05/2026 12:03:39] ✔ Login realizado!
+[19/05/2026 12:03:41]    📄 Página 0: +27 (total: 27)
+[19/05/2026 12:03:42]    📄 Página 1: +0 (total: 27)
+[19/05/2026 12:03:43] ✅ 27 chamadas encontradas
+[19/05/2026 12:03:46]    ⚠️ Status 404 para 6a0b4caa1219eaedb30934fe, tentativa 1/15
+[19/05/2026 12:03:46]    ⚠️ Status 404 para 6a0b5051878875b1fc054d78, tentativa 1/15
+[19/05/2026 12:03:46]    ⚠️ Status 404 para 6a0b4393372537cc770f4dfc, tentativa 1/15
+[19/05/2026 12:03:46]    ✅ BAIXADO: 6a0b75b6afaba65fdd01f045
+[19/05/2026 12:03:47]    ✅ BAIXADO: 6a0b796963a302a36b0df244
+[19/05/2026 12:03:49]    ✅ BAIXADO: 6a0b42509034409d760850fb
+[19/05/2026 12:03:49]    ✅ BAIXADO: 6a0b30a49067239abb02c918
+[19/05/2026 12:03:51]    ✅ BAIXADO: 6a0b2ca0dd5b690ead01bc3c
+[19/05/2026 12:03:52]    ⚠️ Status 404 para 6a0b4caa1219eaedb30934fe, tentativa 2/15
+[19/05/2026 12:03:52]    ✅ BAIXADO: 6a0b2f0bf2751e8f4203e985
+[19/05/2026 12:03:52]    ✅ BAIXADO: 6a0b5051878875b1fc054d78
+[19/05/2026 12:03:52]    ✅ BAIXADO: 6a0b4393372537cc770f4dfc
+[19/05/2026 12:03:55]    ✅ BAIXADO: 6a0b2b9c4b084ce58b051831
+[19/05/2026 12:03:55]    ⚠️ Status 404 para 6a0b20998fb48c09ae0b4888, tentativa 1/15
+[19/05/2026 12:03:55]    ✅ BAIXADO: 6a0b2b11946c06d0dd0f34e0
+[19/05/2026 12:03:55] Progresso: 10/27
+[19/05/2026 12:03:55]    ⚠️ Status 404 para 6a0b2b86a61c4c9c0b080d4d, tentativa 1/15
+[19/05/2026 12:03:56]    ⚠️ Status 422 para 6a0b4caa1219eaedb30934fe, tentativa 3/15
+[19/05/2026 12:03:57]    ✅ BAIXADO: 6a0b20427a9520fd8407ea83
+[19/05/2026 12:03:57]    ✅ BAIXADO: 6a0b1f7454feeb7e1d08fe2f
+[19/05/2026 12:04:13]    ⚠️ Status 404 para 6a0b20998fb48c09ae0b4888, tentativa 2/15
+[19/05/2026 12:04:13]    ✅ BAIXADO: 6a0b4caa1219eaedb30934fe
+[19/05/2026 12:04:13]    ✅ BAIXADO: 6a0b1cfe796cea83e70f9864
+[19/05/2026 12:04:13]    ✅ BAIXADO: 6a0b192a45c3acfe690bc55f
+[19/05/2026 12:04:13]    ✅ BAIXADO: 6a0b2b86a61c4c9c0b080d4d
+[19/05/2026 12:04:19]    ⚠️ Status 404 para 6a0b17341383414fde0e5912, tentativa 1/15
+[19/05/2026 12:04:19]    ⚠️ Status 404 para 6a0b107ddadb45354306fa80, tentativa 1/15
+[19/05/2026 12:04:19]    ✅ BAIXADO: 6a0b20998fb48c09ae0b4888
+[19/05/2026 12:04:21]    ✅ BAIXADO: 6a0b115d7f77cab4f8011b5e
+[19/05/2026 12:04:23]    ⚠️ Status 422 para 6a0b1846b0bf05c46a005583, tentativa 2/15
+[19/05/2026 12:04:23]    ✅ BAIXADO: 6a0b074dafb0f2b29402bf45
+[19/05/2026 12:04:23]    ⚠️ Status 422 para 6a0b17341383414fde0e5912, tentativa 2/15
+[19/05/2026 12:04:25]    ✅ BAIXADO: 6a0b107ddadb45354306fa80
+[19/05/2026 12:04:25] Progresso: 20/27
+[19/05/2026 12:04:26]    ✅ BAIXADO: 6a0afb2c3fcef1c7760ac7f0
+[19/05/2026 12:04:26]    ✅ BAIXADO: 6a0b00bce3ee48a50e0de4f3
+[19/05/2026 12:04:27]    ✅ BAIXADO: 6a0af9c90c2e5be04601be05
+[19/05/2026 12:04:28]    ✅ BAIXADO: 6a0b1846b0bf05c46a005583
+[19/05/2026 12:04:28]    ⚠️ Status 404 para 6a0b17341383414fde0e5912, tentativa 3/15
+[19/05/2026 12:04:29]    ✅ BAIXADO: 6a0af3ab1c2eb1ca9c06a4e4
+[19/05/2026 12:04:29]    ✅ BAIXADO: 6a0af6a4725b2a67f90ea364
+[19/05/2026 12:04:32]    ⚠️ Status 422 para 6a0b17341383414fde0e5912, tentativa 4/15
+[19/05/2026 12:04:38]    ✅ BAIXADO: 6a0b17341383414fde0e5912
+[19/05/2026 12:04:38] Progresso: 27/27
+[19/05/2026 12:04:38] ==================================================
+[19/05/2026 12:04:38] ✅ DOWNLOAD CONCLUÍDO!
+[19/05/2026 12:04:38]    OK: 27 | Existia: 0 | Erros: 0
+[19/05/2026 12:04:38] 📁 Pasta: MAIO 05\018
+[19/05/2026 12:04:38] ==================================================

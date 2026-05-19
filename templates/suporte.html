@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Suporte — FiscalPro{% endblock %}
+{% block page_title %}Suporte{% endblock %}
+
+{% block content %}
+<div class="grid-2">
+    <div class="card">
+        <div class="card-header">
+            <i class="bi bi-chat-dots"></i> Abrir Chamado
+        </div>
+        <form method="POST" action="{{ url_for('suporte') }}">
+            <div class="form-group">
+                <label for="mensagem">Descreva seu problema ou dúvida</label>
+                <textarea id="mensagem" name="mensagem" class="form-control" rows="5" 
+                          placeholder="Descreva detalhadamente o que está acontecendo..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-send"></i> Enviar Chamado
+            </button>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <i class="bi bi-question-circle"></i> FAQ — Perguntas Frequentes
+        </div>
+        <div class="faq-item mb-2">
+            <strong style="color:#374151;">📌 Como fazer upload de arquivos?</strong>
+            <p style="font-size:0.85rem; color:#6b7280; margin-top:0.25rem;">
+                Acesse o Dashboard e use a seção "Upload de Arquivo" no final da página. 
+                Formatos aceitos: .xlsx, .xls, .csv.
+            </p>
+        </div>
+        <div class="faq-item mb-2">
+            <strong style="color:#374151;">📌 Como funciona a conciliação?</strong>
+            <p style="font-size:0.85rem; color:#6b7280; margin-top:0.25rem;">
+                A conciliação compara automaticamente os valores do extrato bancário com as notas fiscais.
+                Itens com valores correspondentes são marcados como conciliados.
+            </p>
+        </div>
+        <div class="faq-item mb-2">
+            <strong style="color:#374151;">📌 Como exportar dados?</strong>
+            <p style="font-size:0.85rem; color:#6b7280; margin-top:0.25rem;">
+                No Dashboard, use os botões "Excel" ou "CSV" para baixar suas transações.
+            </p>
+        </div>
+        <div class="faq-item">
+            <strong style="color:#374151;">📌 Esqueci minha senha. O que fazer?</strong>
+            <p style="font-size:0.85rem; color:#6b7280; margin-top:0.25rem;">
+                Entre em contato pelo formulário ao lado ou peça para um administrador redefinir sua senha.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-3">
+    <div class="card-header">
+        <i class="bi bi-telephone"></i> Contato
+    </div>
+    <p style="color:#6b7280;">
+        <i class="bi bi-envelope"></i> suporte@fiscalpro.com.br<br>
+        <i class="bi bi-whatsapp"></i> (11) 99999-9999<br>
+        <i class="bi bi-clock"></i> Seg a Sex, 9h às 18h
+    </p>
+</div>
+{% endblock %}

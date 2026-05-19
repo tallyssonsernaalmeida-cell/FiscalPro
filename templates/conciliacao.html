@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Conciliação — FiscalPro{% endblock %}
+{% block page_title %}Conciliação Bancária{% endblock %}
+
+{% block content %}
+<div class="grid-2 mb-3">
+    <div class="card stat-card">
+        <div class="stat-value text-success">R$ {{ "%.2f"|format(total_creditos) }}</div>
+        <div class="stat-label">Total Créditos</div>
+    </div>
+    <div class="card stat-card">
+        <div class="stat-value text-danger">R$ {{ "%.2f"|format(total_debitos) }}</div>
+        <div class="stat-label">Total Débitos</div>
+    </div>
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+    <div class="card">
+        <div class="card-header">
+            <i class="bi bi-arrow-up-circle text-success"></i> Créditos
+            <span style="font-size:0.8rem; color:#6b7280;">({{ creditos|length }})</span>
+        </div>
+        {% if creditos %}
+        <table>
+            <thead>
+                <tr><th>Data</th><th>Descrição</th><th>Categoria</th><th class="text-right">Valor</th></tr>
+            </thead>
+            <tbody>
+                {% for t in creditos[:30] %}
+                <tr>
+                    <td>{{ t['data'] }}</td>
+                    <td>{{ t['descricao'][:35] + '...' if t['descricao']|length > 35 else t['descricao'] }}</td>
+                    <td>{{ t['categoria'] }}</td>
+                    <td class="text-right text-success">R$ {{ "%.2f"|format(t['valor']) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state"><i class="bi bi-inbox"></i><p>Nenhum crédito</p></div>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <i class="bi bi-arrow-down-circle text-danger"></i> Débitos
+            <span style="font-size:0.8rem; color:#6b7280;">({{ debitos|length }})</span>
+        </div>
+        {% if debitos %}
+        <table>
+            <thead>
+                <tr><th>Data</th><th>Descrição</th><th>Categoria</th><th class="text-right">Valor</th></tr>
+            </thead>
+            <tbody>
+                {% for t in debitos[:30] %}
+                <tr>
+                    <td>{{ t['data'] }}</td>
+                    <td>{{ t['descricao'][:35] + '...' if t['descricao']|length > 35 else t['descricao'] }}</td>
+                    <td>{{ t['categoria'] }}</td>
+                    <td class="text-right text-danger">R$ {{ "%.2f"|format(t['valor']|abs) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state"><i class="bi bi-inbox"></i><p>Nenhum débito</p></div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="mt-3 text-center">
+    <a href="{{ url_for('download_conciliacao') }}" class="btn btn-primary">
+        <i class="bi bi-download"></i> Baixar Conciliação (Excel)
+    </a>
+</div>
+{% endblock %}

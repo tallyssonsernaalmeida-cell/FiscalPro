@@ -1,0 +1,8 @@
+6) Regra de ouro daqui pra frente
+
+Sempre que criar algo novo:
+
+Script principal → src
+Script de teste/debug → utils
+Automação → scripts
+Build/config → spec

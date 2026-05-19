@@ -1,0 +1,11 @@
+{
+    "admin@fiscal.app": {
+        "password": "scrypt:32768:8:1$ZsddA3Pcx3CQJJag$344327f77c036b8f2956816621e4e34cd5fddc378879d5a7b992e1fac9a9030d9cd7c8e4e0d545da83b8d9887c8daaa2a0f95b8a61f55fb5d843acd54dc4e7c5",
+        "nome": "Administrador",
+        "role": "admin",
+        "files": [],
+        "whatsapp": "",
+        "created_at": "2026-05-19T16:05:59.979895",
+        "ativo": true
+    }
+}

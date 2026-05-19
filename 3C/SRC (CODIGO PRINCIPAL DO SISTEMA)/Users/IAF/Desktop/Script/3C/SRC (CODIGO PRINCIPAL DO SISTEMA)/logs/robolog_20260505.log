@@ -1,0 +1,129 @@
+05/05/2026 19:02:08 | INFO     | 
+============================================================
+05/05/2026 19:02:08 | INFO     | CONSULTA SQL - MONITORAMENTO EM TEMPO REAL
+05/05/2026 19:02:08 | INFO     | ============================================================
+05/05/2026 19:02:08 | INFO     | SQL: Conectando ao SQL Server...
+05/05/2026 19:02:08 | INFO     | SQL:    Servidor: DESKTOP-74TBS68
+05/05/2026 19:02:09 | ERROR    | Erro na conexao: (18456, b"Falha de logon do usu\xc3\xa1rio 'ControlDesk'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\n")
+05/05/2026 19:02:09 | ERROR    | Erro na consulta SQL: (18456, b"Falha de logon do usu\xc3\xa1rio 'ControlDesk'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\n")
+05/05/2026 19:02:09 | ERROR    | Traceback (most recent call last):
+  File "src/pymssql/_pymssql.pyx", line 651, in pymssql._pymssql.connect
+  File "src/pymssql/_mssql.pyx", line 2189, in pymssql._mssql.connect
+  File "src/pymssql/_mssql.pyx", line 722, in pymssql._mssql.MSSQLConnection.__init__
+  File "src/pymssql/_mssql.pyx", line 1915, in pymssql._mssql.maybe_raise_MSSQLDatabaseException
+  File "src/pymssql/_mssql.pyx", line 1932, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (18456, b"Falha de logon do usu\xc3\xa1rio 'ControlDesk'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\IAF\Desktop\Script\3C\SRC (CODIGO PRINCIPAL DO SISTEMA)\automacao_olos_mailing.py", line 230, in executar_consulta_sql
+    conn = self.conectar_banco()
+  File "C:\Users\IAF\Desktop\Script\3C\SRC (CODIGO PRINCIPAL DO SISTEMA)\automacao_olos_mailing.py", line 163, in conectar_banco
+    conn = pymssql.connect(
+        server=server,
+    ...<3 lines>...
+        timeout=30
+    )
+  File "src/pymssql/_pymssql.pyx", line 660, in pymssql._pymssql.connect
+pymssql.exceptions.OperationalError: (18456, b"Falha de logon do usu\xc3\xa1rio 'ControlDesk'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\n")
+
+05/05/2026 19:05:34 | INFO     | 
+============================================================
+05/05/2026 19:05:34 | INFO     | CONSULTA SQL - MONITORAMENTO EM TEMPO REAL
+05/05/2026 19:05:34 | INFO     | ============================================================
+05/05/2026 19:05:34 | INFO     | SQL: Conectando ao SQL Server...
+05/05/2026 19:05:34 | INFO     | SQL:    Servidor: DESKTOP-74TBS68
+05/05/2026 19:05:34 | INFO     | SQL: Tentando conectar em: DESKTOP-74TBS68
+05/05/2026 19:05:34 | INFO     | SQL: Banco: seu_banco
+05/05/2026 19:05:34 | INFO     | SQL: Usuario: ControlDesk
+05/05/2026 19:05:34 | ERROR    | Erro na conexao: (18456, b"Falha de logon do usu\xc3\xa1rio 'ControlDesk'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\n")
+05/05/2026 19:05:35 | ERROR    | Erro na consulta SQL: (18456, b"Falha de logon do usu\xc3\xa1rio 'ControlDesk'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\n")
+05/05/2026 19:05:35 | ERROR    | Traceback (most recent call last):
+  File "src/pymssql/_pymssql.pyx", line 651, in pymssql._pymssql.connect
+  File "src/pymssql/_mssql.pyx", line 2189, in pymssql._mssql.connect
+  File "src/pymssql/_mssql.pyx", line 722, in pymssql._mssql.MSSQLConnection.__init__
+  File "src/pymssql/_mssql.pyx", line 1915, in pymssql._mssql.maybe_raise_MSSQLDatabaseException
+  File "src/pymssql/_mssql.pyx", line 1932, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (18456, b"Falha de logon do usu\xc3\xa1rio 'ControlDesk'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\IAF\Desktop\Script\3C\SRC (CODIGO PRINCIPAL DO SISTEMA)\automacao_olos_mailing.py", line 239, in executar_consulta_sql
+    conn = self.conectar_banco()
+  File "C:\Users\IAF\Desktop\Script\3C\SRC (CODIGO PRINCIPAL DO SISTEMA)\automacao_olos_mailing.py", line 168, in conectar_banco
+    conn = pymssql.connect(
+        server=str(server).encode('utf-8').decode('utf-8'),
+    ...<4 lines>...
+        charset='UTF-8'
+    )
+  File "src/pymssql/_pymssql.pyx", line 660, in pymssql._pymssql.connect
+pymssql.exceptions.OperationalError: (18456, b"Falha de logon do usu\xc3\xa1rio 'ControlDesk'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\n")
+
+05/05/2026 19:06:59 | INFO     | 
+============================================================
+05/05/2026 19:06:59 | INFO     | CONSULTA SQL - MONITORAMENTO EM TEMPO REAL
+05/05/2026 19:06:59 | INFO     | ============================================================
+05/05/2026 19:06:59 | INFO     | SQL: Conectando ao SQL Server...
+05/05/2026 19:06:59 | INFO     | SQL:    Servidor: DESKTOP-74TBS68
+05/05/2026 19:06:59 | INFO     | SQL: Tentando conectar em: DESKTOP-74TBS68
+05/05/2026 19:06:59 | INFO     | SQL: Banco: seu_banco
+05/05/2026 19:06:59 | INFO     | SQL: Usuario: ControlDesk
+05/05/2026 19:07:00 | ERROR    | Erro na conexao: (18456, b"Falha de logon do usu\xc3\xa1rio 'ControlDesk'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\n")
+05/05/2026 19:07:00 | ERROR    | Erro na consulta SQL: (18456, b"Falha de logon do usu\xc3\xa1rio 'ControlDesk'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\n")
+05/05/2026 19:07:00 | ERROR    | Traceback (most recent call last):
+  File "src/pymssql/_pymssql.pyx", line 651, in pymssql._pymssql.connect
+  File "src/pymssql/_mssql.pyx", line 2189, in pymssql._mssql.connect
+  File "src/pymssql/_mssql.pyx", line 722, in pymssql._mssql.MSSQLConnection.__init__
+  File "src/pymssql/_mssql.pyx", line 1915, in pymssql._mssql.maybe_raise_MSSQLDatabaseException
+  File "src/pymssql/_mssql.pyx", line 1932, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (18456, b"Falha de logon do usu\xc3\xa1rio 'ControlDesk'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\IAF\Desktop\Script\3C\SRC (CODIGO PRINCIPAL DO SISTEMA)\automacao_olos_mailing.py", line 239, in executar_consulta_sql
+    conn = self.conectar_banco()
+  File "C:\Users\IAF\Desktop\Script\3C\SRC (CODIGO PRINCIPAL DO SISTEMA)\automacao_olos_mailing.py", line 168, in conectar_banco
+    conn = pymssql.connect(
+        server=str(server).encode('utf-8').decode('utf-8'),
+    ...<4 lines>...
+        charset='UTF-8'
+    )
+  File "src/pymssql/_pymssql.pyx", line 660, in pymssql._pymssql.connect
+pymssql.exceptions.OperationalError: (18456, b"Falha de logon do usu\xc3\xa1rio 'ControlDesk'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\n")
+
+05/05/2026 19:08:39 | INFO     | 
+============================================================
+05/05/2026 19:08:39 | INFO     | CONSULTA SQL - MONITORAMENTO EM TEMPO REAL
+05/05/2026 19:08:39 | INFO     | ============================================================
+05/05/2026 19:08:39 | INFO     | SQL: Conectando ao SQL Server...
+05/05/2026 19:08:39 | INFO     | SQL:    Servidor: DESKTOP-74TBS68
+05/05/2026 19:08:39 | INFO     | SQL: Tentando conectar em: DESKTOP-74TBS68
+05/05/2026 19:08:39 | INFO     | SQL: Banco: seu_banco
+05/05/2026 19:08:39 | INFO     | SQL: Usuario: ControlDesk
+05/05/2026 19:08:40 | ERROR    | Erro na conexao: (18456, b"Falha de logon do usu\xc3\xa1rio 'ControlDesk'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\n")
+05/05/2026 19:08:40 | ERROR    | Erro na consulta SQL: (18456, b"Falha de logon do usu\xc3\xa1rio 'ControlDesk'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\n")
+05/05/2026 19:08:40 | ERROR    | Traceback (most recent call last):
+  File "src/pymssql/_pymssql.pyx", line 651, in pymssql._pymssql.connect
+  File "src/pymssql/_mssql.pyx", line 2189, in pymssql._mssql.connect
+  File "src/pymssql/_mssql.pyx", line 722, in pymssql._mssql.MSSQLConnection.__init__
+  File "src/pymssql/_mssql.pyx", line 1915, in pymssql._mssql.maybe_raise_MSSQLDatabaseException
+  File "src/pymssql/_mssql.pyx", line 1932, in pymssql._mssql.raise_MSSQLDatabaseException
+pymssql._mssql.MSSQLDatabaseException: (18456, b"Falha de logon do usu\xc3\xa1rio 'ControlDesk'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\n")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\IAF\Desktop\Script\3C\SRC (CODIGO PRINCIPAL DO SISTEMA)\automacao_olos_mailing.py", line 239, in executar_consulta_sql
+    conn = self.conectar_banco()
+  File "C:\Users\IAF\Desktop\Script\3C\SRC (CODIGO PRINCIPAL DO SISTEMA)\automacao_olos_mailing.py", line 168, in conectar_banco
+    conn = pymssql.connect(
+        server=str(server).encode('utf-8').decode('utf-8'),
+    ...<4 lines>...
+        charset='UTF-8'
+    )
+  File "src/pymssql/_pymssql.pyx", line 660, in pymssql._pymssql.connect
+pymssql.exceptions.OperationalError: (18456, b"Falha de logon do usu\xc3\xa1rio 'ControlDesk'.DB-Lib error message 20018, severity 14:\nGeneral SQL Server error: Check messages from the SQL Server\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\nDB-Lib error message 20002, severity 9:\nAdaptive Server connection failed (DESKTOP-74TBS68)\n")
+

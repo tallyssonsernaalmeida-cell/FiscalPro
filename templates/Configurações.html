@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Configurações — FiscalPro{% endblock %}
+{% block page_title %}Configurações do Sistema{% endblock %}
+
+{% block content %}
+<div class="grid-2">
+    <div class="card">
+        <div class="card-header">
+            <i class="bi bi-gear"></i> Configurações Gerais
+        </div>
+        <form method="POST" action="{{ url_for('configuracoes') }}">
+            <div class="form-group">
+                <label for="nome_sistema">Nome do Sistema</label>
+                <input type="text" id="nome_sistema" name="nome_sistema" class="form-control" 
+                       value="{{ config.nome_sistema if config else 'FiscalPro' }}">
+            </div>
+            <div class="form-group">
+                <label for="limite_upload">Limite de Upload (MB)</label>
+                <input type="number" id="limite_upload" name="limite_upload" class="form-control" 
+                       value="{{ config.limite_upload if config else 10 }}">
+            </div>
+            <div class="form-group">
+                <label for="itens_por_pagina">Itens por Página</label>
+                <select id="itens_por_pagina" name="itens_por_pagina" class="form-control">
+                    <option value="20" {{ 'selected' if config and config.itens_por_pagina == 20 }}>20</option>
+                    <option value="50" {{ 'selected' if config and config.itens_por_pagina == 50 }}>50</option>
+                    <option value="100" {{ 'selected' if config and config.itens_por_pagina == 100 }}>100</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check-lg"></i> Salvar Configurações
+            </button>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <i class="bi bi-envelope"></i> Configurações de E-mail
+        </div>
+        <form method="POST" action="{{ url_for('configuracoes') }}">
+            <div class="form-group">
+                <label for="smtp_host">Servidor SMTP</label>
+                <input type="text" id="smtp_host" name="smtp_host" class="form-control" 
+                       value="{{ config.smtp_host if config else '' }}" placeholder="smtp.gmail.com">
+            </div>
+            <div class="form-group">
+                <label for="smtp_port">Porta SMTP</label>
+                <input type="number" id="smtp_port" name="smtp_port" class="form-control" 
+                       value="{{ config.smtp_port if config else 587 }}">
+            </div>
+            <div class="form-group">
+                <label for="smtp_email">E-mail Remetente</label>
+                <input type="email" id="smtp_email" name="smtp_email" class="form-control" 
+                       value="{{ config.smtp_email if config else '' }}">
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check-lg"></i> Salvar E-mail
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="card mt-3">
+    <div class="card-header">
+        <i class="bi bi-database"></i> Backup e Manutenção
+    </div>
+    <div class="flex gap-2">
+        <a href="#" class="btn btn-secondary" onclick="alert('Funcionalidade de backup manual')">
+            <i class="bi bi-download"></i> Backup Manual
+        </a>
+        <a href="#" class="btn btn-danger" onclick="if(confirm('Limpar todos os uploads?')) alert('Uploads limpos')">
+            <i class="bi bi-trash"></i> Limpar Uploads
+        </a>
+    </div>
+    <p style="font-size:0.8rem; color:#6b7280; margin-top:1rem;">
+        <i class="bi bi-info-circle"></i> 
+        Python: {{ sys_python if sys_python else 'N/A' }} | 
+        Sistema: {{ sys_platform if sys_platform else 'N/A' }}
+    </p>
+</div>
+{% endblock %}

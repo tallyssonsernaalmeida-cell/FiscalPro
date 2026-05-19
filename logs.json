@@ -1,0 +1,26 @@
+[
+  {
+    "data": "19/05/2026 16:20:04",
+    "acao": "Login",
+    "usuario": "admin@fiscal.app",
+    "detalhe": "IP: 127.0.0.1"
+  },
+  {
+    "data": "19/05/2026 16:17:36",
+    "acao": "Login",
+    "usuario": "admin@fiscal.app",
+    "detalhe": "IP: 127.0.0.1"
+  },
+  {
+    "data": "19/05/2026 16:13:13",
+    "acao": "Login",
+    "usuario": "admin@fiscal.app",
+    "detalhe": "IP: 127.0.0.1"
+  },
+  {
+    "data": "19/05/2026 16:06:48",
+    "acao": "Login",
+    "usuario": "admin@fiscal.app",
+    "detalhe": "IP: 127.0.0.1"
+  }
+]

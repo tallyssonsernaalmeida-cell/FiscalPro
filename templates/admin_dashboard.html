@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% block title %}Admin — FiscalPro{% endblock %}
+{% block page_title %}Painel Administrativo{% endblock %}
+
+{% block content %}
+<div class="grid-3 mb-3">
+    <div class="card stat-card">
+        <div class="stat-value">{{ total_usuarios }}</div>
+        <div class="stat-label">Total de Usuários</div>
+    </div>
+    <div class="card stat-card">
+        <div class="stat-value">{{ total_ativos }}</div>
+        <div class="stat-label">Usuários Ativos</div>
+    </div>
+    <div class="card stat-card">
+        <div class="stat-value">{{ logs|length }}</div>
+        <div class="stat-label">Logs Registrados</div>
+    </div>
+</div>
+
+<!-- USUÁRIOS -->
+<div class="card mb-3">
+    <div class="flex-between mb-2">
+        <div class="card-header" style="margin-bottom:0;">
+            <i class="bi bi-people"></i> Usuários Cadastrados
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="document.getElementById('form-criar').style.display='block'">
+            <i class="bi bi-plus-lg"></i> Novo Usuário
+        </button>
+    </div>
+
+    <!-- Form criar usuário -->
+    <div id="form-criar" style="display:none; background:#f9fafb; padding:1rem; border-radius:8px; margin-bottom:1rem;">
+        <form method="POST" action="{{ url_for('admin_criar_usuario') }}">
+            <div class="grid-2 gap-2">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" name="nome" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" name="password" class="form-control" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label>Função</label>
+                    <select name="role" class="form-control">
+                        <option value="user">Usuário</option>
+                        <option value="admin">Administrador</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Criar Usuário</button>
+            <button type="button" class="btn btn-secondary mt-2" onclick="document.getElementById('form-criar').style.display='none'">Cancelar</button>
+        </form>
+    </div>
+
+    {% if usuarios %}
+    <div style="overflow-x:auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Função</th>
+                    <th>Status</th>
+                    <th>WhatsApp</th>
+                    <th>Arquivos</th>
+                    <th>Criado em</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in usuarios %}
+                <tr>
+                    <td>{{ u['nome'] }}</td>
+                    <td>{{ u['email'] }}</td>
+                    <td>
+                        <span class="badge {{ 'badge-success' if u['role'] == 'admin' else 'badge-warning' }}">
+                            {{ u['role'] }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge {{ 'badge-success' if u['ativo'] else 'badge-danger' }}">
+                            {{ 'Ativo' if u['ativo'] else 'Inativo' }}
+                        </span>
+                    </td>
+                    <td>{{ u['whatsapp'] or '-' }}</td>
+                    <td>{{ u['files_count'] }}</td>
+                    <td>{{ u['created_at'] }}</td>
+                    <td>
+                        <div class="flex gap-2">
+                            {% if u['email'] != email %}
+                            <form method="POST" action="{{ url_for('toggle_ativo') }}" style="display:inline;">
+                                <input type="hidden" name="email" value="{{ u['email'] }}">
+                                <button type="submit" class="btn btn-sm {{ 'btn-danger' if u['ativo'] else 'btn-primary' }}">
+                                    {{ 'Desativar' if u['ativo'] else 'Ativar' }}
+                                </button>
+                            </form>
+                            <form method="POST" action="{{ url_for('remover_usuario') }}" style="display:inline;"
+                                  onsubmit="return confirm('Remover {{ u['nome'] }}?')">
+                                <input type="hidden" name="email" value="{{ u['email'] }}">
+                                <button type="submit" class="btn btn-sm btn-danger">Remover</button>
+                            </form>
+                            {% else %}
+                            <span style="font-size:0.75rem; color:#9ca3af;">Você</span>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="bi bi-people"></i>
+        <p>Nenhum usuário cadastrado</p>
+    </div>
+    {% endif %}
+</div>
+
+<!-- LOGS -->
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="bi bi-journal-text"></i> Últimos Logs
+    </div>
+    {% if logs %}
+    <table>
+        <thead>
+            <tr>
+                <th>Data/Hora</th>
+                <th>Usuário</th>
+                <th>Ação</th>
+                <th>Detalhe</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs[:20] %}
+            <tr>
+                <td>{{ log['data'] }}</td>
+                <td>{{ log['usuario'] }}</td>
+                <td>{{ log['acao'] }}</td>
+                <td>{{ log['detalhe'] or '-' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+        <i class="bi bi-journal-text"></i>
+        <p>Nenhum log registrado</p>
+    </div>
+    {% endif %}
+</div>
+
+<!-- SUPORTE -->
+<div class="card">
+    <div class="card-header">
+        <i class="bi bi-chat-dots"></i> Mensagens de Suporte
+    </div>
+    {% if support_messages %}
+    <table>
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>De</th>
+                <th>Mensagem</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for msg in support_messages %}
+            <tr>
+                <td>{{ msg['data'][:10] }}</td>
+                <td>{{ msg['nome'] }}<br><small>{{ msg['de'] }}</small></td>
+                <td>{{ msg['mensagem'][:80] }}</td>
+                <td>
+                    <span class="badge {{ 'badge-success' if msg.get('lido') else 'badge-warning' }}">
+                        {{ 'Respondido' if msg.get('lido') else 'Pendente' }}
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+        <i class="bi bi-chat-dots"></i>
+        <p>Nenhuma mensagem de suporte</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

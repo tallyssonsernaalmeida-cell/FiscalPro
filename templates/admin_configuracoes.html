@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}Config. Admin — FiscalPro{% endblock %}
+{% block page_title %}Configurações do Sistema{% endblock %}
+
+{% block content %}
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+
+  <!-- Configurações Gerais -->
+  <div class="card">
+    <div class="card-title"><i class="fa fa-gear"></i> Configurações Gerais</div>
+    <form method="POST" action="{{ url_for('admin_configuracoes') }}">
+      <input type="hidden" name="secao" value="geral">
+      <div class="form-group">
+        <label class="form-label">Nome do Sistema</label>
+        <input type="text" name="nome_sistema" class="form-control" value="{{ config.nome_sistema or 'FiscalPro' }}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Permitir Cadastro Público</label>
+        <select name="cadastro_publico" class="form-control">
+          <option value="1" {{ 'selected' if config.cadastro_publico else '' }}>Sim — qualquer pessoa pode criar conta</option>
+          <option value="0" {{ 'selected' if not config.cadastro_publico else '' }}>Não — somente admin cria usuários</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Máximo de arquivos por usuário</label>
+        <input type="number" name="max_arquivos" class="form-control" value="{{ config.max_arquivos or 50 }}" min="1">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tamanho máximo de upload (MB)</label>
+        <input type="number" name="max_upload_mb" class="form-control" value="{{ config.max_upload_mb or 16 }}" min="1">
+      </div>
+      <button type="submit" class="btn btn-green"><i class="fa fa-floppy-disk"></i> Salvar</button>
+    </form>
+  </div>
+
+  <!-- Configurações de E-mail -->
+  <div class="card">
+    <div class="card-title"><i class="fa fa-envelope-open-text"></i> E-mail / Notificações</div>
+    <form method="POST" action="{{ url_for('admin_configuracoes') }}">
+      <input type="hidden" name="secao" value="email">
+      <div class="form-group">
+        <label class="form-label">SMTP Host</label>
+        <input type="text" name="smtp_host" class="form-control" value="{{ config.smtp_host or '' }}" placeholder="smtp.gmail.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">SMTP Porta</label>
+        <input type="number" name="smtp_porta" class="form-control" value="{{ config.smtp_porta or 587 }}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">E-mail Remetente</label>
+        <input type="email" name="smtp_email" class="form-control" value="{{ config.smtp_email or '' }}" placeholder="noreply@seudominio.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Senha SMTP</label>
+        <input type="password" name="smtp_senha" class="form-control" placeholder="Deixe em branco para manter">
+      </div>
+      <button type="submit" class="btn btn-green"><i class="fa fa-floppy-disk"></i> Salvar</button>
+    </form>
+  </div>
+
+  <!-- Backup & Limpeza -->
+  <div class="card">
+    <div class="card-title"><i class="fa fa-database"></i> Backup e Limpeza</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px">Gerencie os dados armazenados no sistema.</p>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <a href="{{ url_for('admin_backup') }}" class="btn btn-outline"><i class="fa fa-download"></i> Baixar Backup Completo</a>
+      <form method="POST" action="{{ url_for('admin_limpar_logs') }}" onsubmit="return confirm('Limpar todos os logs de atividade?')">
+        <button type="submit" class="btn btn-gray" style="width:100%"><i class="fa fa-broom"></i> Limpar Logs de Atividade</button>
+      </form>
+      <form method="POST" action="{{ url_for('admin_limpar_uploads') }}" onsubmit="return confirm('Remover arquivos antigos de uploads? Esta ação não pode ser desfeita.')">
+        <button type="submit" class="btn btn-red" style="width:100%"><i class="fa fa-trash"></i> Limpar Uploads Antigos</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Informações do Sistema -->
+  <div class="card">
+    <div class="card-title"><i class="fa fa-circle-info"></i> Informações do Sistema</div>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:14px">
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <span style="color:var(--text-muted)">Versão</span>
+        <strong>FiscalPro v1.0</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <span style="color:var(--text-muted)">Python</span>
+        <strong>{{ sys_python or '—' }}</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <span style="color:var(--text-muted)">Flask</span>
+        <strong>{{ sys_flask or '—' }}</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <span style="color:var(--text-muted)">Pasta de Dados</span>
+        <strong style="font-size:12px">{{ sys_pasta or '—' }}</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0">
+        <span style="color:var(--text-muted)">Espaço usado</span>
+        <strong>{{ sys_espaco or '—' }}</strong>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
