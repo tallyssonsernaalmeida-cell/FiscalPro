@@ -3,6 +3,10 @@
 {% block title %}Dashboard — FiscalPro{% endblock %}
 {% block page_title %}Dashboard{% endblock %}
 
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+{% endblock %}
+
 {% block content %}
 <div class="grid-4 mb-3">
     <div class="card stat-card">
@@ -24,18 +28,16 @@
 </div>
 
 <div class="grid-2 mb-3">
+    <!-- GRÁFICO DESPESAS -->
     <div class="card">
         <div class="card-header">
             <i class="bi bi-pie-chart"></i> Top Despesas por Categoria
         </div>
         {% if dash and dash['top_categorias'] %}
-            <table>
+            <canvas id="chartDespesas" width="300" height="300" style="max-height:300px;"></canvas>
+            <table style="margin-top:10px;">
                 <thead>
-                    <tr>
-                        <th>Categoria</th>
-                        <th class="text-right">Valor</th>
-                        <th class="text-right">%</th>
-                    </tr>
+                    <tr><th>Categoria</th><th class="text-right">Valor</th><th class="text-right">%</th></tr>
                 </thead>
                 <tbody>
                     {% for cat, val in dash['top_categorias'] %}
@@ -43,147 +45,149 @@
                         <td>{{ cat }}</td>
                         <td class="text-right text-danger">R$ {{ "%.2f"|format(val) }}</td>
                         <td class="text-right">
-                            {% if dash['total_despesas'] > 0 %}
-                                {{ "%.1f"|format(val / dash['total_despesas'] * 100) }}%
-                            {% else %}
-                                0%
-                            {% endif %}
+                            {{ "%.1f"|format(val / dash['total_despesas'] * 100) if dash['total_despesas'] > 0 else 0 }}%
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         {% else %}
-            <div class="empty-state">
-                <i class="bi bi-bar-chart"></i>
-                <p>Nenhuma despesa registrada</p>
-            </div>
+            <div class="empty-state"><i class="bi bi-bar-chart"></i><p>Nenhuma despesa</p></div>
         {% endif %}
     </div>
-    
+
+    <!-- GRÁFICO RECEITAS -->
     <div class="card">
         <div class="card-header">
-            <i class="bi bi-graph-up"></i> Top Receitas por Categoria
+            <i class="bi bi-graph-up"></i> Receitas por Categoria
         </div>
         {% if dash and dash['categorias_rec'] %}
-            {% set top_rec = dash['categorias_rec'].items()|list %}
-            {% set top_rec = (top_rec|sort(by='value', reverse=true))[:5] %}
-            <table>
+            <canvas id="chartReceitas" width="300" height="300" style="max-height:300px;"></canvas>
+            <table style="margin-top:10px;">
                 <thead>
-                    <tr>
-                        <th>Categoria</th>
-                        <th class="text-right">Valor</th>
-                        <th class="text-right">%</th>
-                    </tr>
+                    <tr><th>Categoria</th><th class="text-right">Valor</th><th class="text-right">%</th></tr>
                 </thead>
                 <tbody>
-                    {% for cat, val in top_rec %}
+                    {% for cat, val in dash['categorias_rec'].items() %}
                     <tr>
                         <td>{{ cat }}</td>
                         <td class="text-right text-success">R$ {{ "%.2f"|format(val) }}</td>
                         <td class="text-right">
-                            {% if dash['total_receitas'] > 0 %}
-                                {{ "%.1f"|format(val / dash['total_receitas'] * 100) }}%
-                            {% else %}
-                                0%
-                            {% endif %}
+                            {{ "%.1f"|format(val / dash['total_receitas'] * 100) if dash['total_receitas'] > 0 else 0 }}%
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         {% else %}
-            <div class="empty-state">
-                <i class="bi bi-calendar3"></i>
-                <p>Nenhuma receita registrada</p>
-            </div>
+            <div class="empty-state"><i class="bi bi-calendar3"></i><p>Nenhuma receita</p></div>
         {% endif %}
     </div>
 </div>
 
+<!-- TRANSAÇÕES -->
 <div class="card mb-3">
     <div class="flex-between mb-2">
         <div class="card-header" style="margin-bottom:0;">
             📋 Transações ({{ dash['qtd_transacoes'] if dash else 0 }})
         </div>
         <div class="flex gap-2">
-            <a href="{{ url_for('download_excel') }}" class="btn btn-secondary btn-sm">
-                <i class="bi bi-file-earmark-excel"></i> Excel
-            </a>
-            <a href="{{ url_for('download_conciliacao') }}" class="btn btn-secondary btn-sm">
-                <i class="bi bi-file-earmark-text"></i> Conciliação
-            </a>
+            <a href="{{ url_for('download_excel') }}" class="btn btn-secondary btn-sm"><i class="bi bi-file-earmark-excel"></i> Excel</a>
+            <a href="{{ url_for('download_csv') }}" class="btn btn-secondary btn-sm"><i class="bi bi-file-earmark-text"></i> CSV</a>
         </div>
     </div>
-    
     {% if dash and dash['transactions'] %}
         <table>
             <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Descrição</th>
-                    <th>Categoria</th>
-                    <th>Tipo</th>
-                    <th class="text-right">Valor</th>
-                </tr>
+                <tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Tipo</th><th class="text-right">Valor</th></tr>
             </thead>
             <tbody>
-                {% for t in dash['transactions'][:50] %}
+                {% for t in dash['transactions'] %}
                 <tr>
                     <td>{{ t['data'] }}</td>
-                    <td>{{ t['descricao'][:50] + '...' if t['descricao'] and t['descricao']|length > 50 else t['descricao'] }}</td>
+                    <td>{{ t['descricao'][:60] }}</td>
                     <td>{{ t['categoria'] }}</td>
-                    <td>
-                        <span class="badge {{ 'badge-success' if t['tipo'] == 'Crédito' else 'badge-danger' }}">
-                            {{ t['tipo'] }}
-                        </span>
-                    </td>
-                    <td class="text-right {{ 'text-success' if t['tipo'] == 'Crédito' else 'text-danger' }}">
-                        R$ {{ "%.2f"|format(t['valor']) }}
-                    </td>
+                    <td><span class="badge {{ 'badge-success' if 'Crédito' in t['tipo'] else 'badge-danger' }}">{{ t['tipo'] }}</span></td>
+                    <td class="text-right {{ 'text-success' if 'Crédito' in t['tipo'] else 'text-danger' }}">R$ {{ "%.2f"|format(t['valor']|abs) }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     {% else %}
-        <div class="empty-state">
-            <i class="bi bi-inbox"></i>
-            <p>Nenhuma transação encontrada</p>
-            <p style="font-size:0.85rem; color:#9ca3af;">Faça upload de um arquivo para começar</p>
-        </div>
+        <div class="empty-state"><i class="bi bi-inbox"></i><p>Nenhuma transação</p></div>
     {% endif %}
 </div>
 
+<!-- UPLOAD -->
 <div class="card">
-    <div class="card-header">
-        <i class="bi bi-cloud-upload"></i> Upload de Arquivo
-    </div>
-    
+    <div class="card-header"><i class="bi bi-cloud-upload"></i> Upload de Arquivo</div>
     {% if files %}
     <div class="mb-2">
-        <strong style="font-size:0.85rem;">Arquivos importados:</strong>
+        <strong>Arquivos:</strong>
         <div class="flex flex-wrap gap-2 mt-1">
             {% for f in files %}
-            <span style="background:#ecfdf5; padding:0.25rem 0.75rem; border-radius:20px; font-size:0.8rem;">
+            <span style="background:#ecfdf5;padding:0.25rem 0.75rem;border-radius:20px;font-size:0.8rem;">
                 {{ f['name'] }}
-                <a href="{{ url_for('remover_arquivo', filename=f['name']) }}" 
-                   style="color:#dc2626; text-decoration:none; margin-left:0.25rem;" 
-                   title="Remover">×</a>
+                <a href="{{ url_for('remover_arquivo', filename=f['name']) }}" style="color:#dc2626;text-decoration:none;margin-left:0.25rem;">×</a>
             </span>
             {% endfor %}
         </div>
     </div>
     {% endif %}
-    
     <form method="POST" action="{{ url_for('upload_file') }}" enctype="multipart/form-data" class="flex-center gap-2 flex-wrap">
-        <input type="file" name="file" class="form-control" style="max-width:300px;" 
-               accept=".xlsx,.xls,.csv,.ofx" required>
-        <button type="submit" class="btn btn-primary">
-            <i class="bi bi-upload"></i> Enviar
-        </button>
+        <input type="file" name="file" class="form-control" style="max-width:300px;" accept=".xlsx,.xls,.csv,.ofx" required>
+        <button type="submit" class="btn btn-primary"><i class="bi bi-upload"></i> Enviar</button>
     </form>
-    <p style="font-size:0.8rem; color:#6b7280; margin-top:0.5rem;">
-        Formatos aceitos: .xlsx, .xls, .csv, .ofx
-    </p>
+    <p style="font-size:0.8rem;color:#6b7280;margin-top:0.5rem;">Formatos: .xlsx, .xls, .csv, .ofx</p>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Gráfico de Despesas
+{% if dash and dash['top_categorias'] %}
+var ctxDesp = document.getElementById('chartDespesas').getContext('2d');
+new Chart(ctxDesp, {
+    type: 'doughnut',
+    data: {
+        labels: [{% for cat, val in dash['top_categorias'] %}'{{ cat }}',{% endfor %}],
+        datasets: [{
+            data: [{% for cat, val in dash['top_categorias'] %}{{ val }},{% endfor %}],
+            backgroundColor: ['#dc2626','#ef4444','#f87171','#fca5a5','#fecaca'],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: { position: 'bottom', labels: { font: { size: 11 } } }
+        }
+    }
+});
+{% endif %}
+
+// Gráfico de Receitas
+{% if dash and dash['categorias_rec'] %}
+var ctxRec = document.getElementById('chartReceitas').getContext('2d');
+new Chart(ctxRec, {
+    type: 'doughnut',
+    data: {
+        labels: [{% for cat, val in dash['categorias_rec'].items() %}'{{ cat }}',{% endfor %}],
+        datasets: [{
+            data: [{% for cat, val in dash['categorias_rec'].items() %}{{ val }},{% endfor %}],
+            backgroundColor: ['#059669','#10b981','#34d399','#6ee7b7','#a7f3d0','#d1fae5'],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: { position: 'bottom', labels: { font: { size: 11 } } }
+        }
+    }
+});
+{% endif %}
+</script>
 {% endblock %}

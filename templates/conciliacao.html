@@ -3,8 +3,13 @@
 {% block title %}Conciliação — FiscalPro{% endblock %}
 {% block page_title %}Conciliação Bancária{% endblock %}
 
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+{% endblock %}
+
 {% block content %}
-<div class="grid-2 mb-3">
+<!-- CARDS RESUMO -->
+<div class="grid-3 mb-3">
     <div class="card stat-card">
         <div class="stat-value text-success">R$ {{ "%.2f"|format(total_creditos) }}</div>
         <div class="stat-label">Total Créditos</div>
@@ -13,24 +18,45 @@
         <div class="stat-value text-danger">R$ {{ "%.2f"|format(total_debitos) }}</div>
         <div class="stat-label">Total Débitos</div>
     </div>
+    <div class="card stat-card">
+        <div class="stat-value">{{ conciliados }} / {{ total_itens }}</div>
+        <div class="stat-label">Itens Conciliados</div>
+    </div>
 </div>
 
+<!-- UPLOAD DOS ARQUIVOS -->
+<div class="card mb-3">
+    <div class="card-header"><i class="bi bi-cloud-upload"></i> Importar Arquivos para Conciliação</div>
+    <form method="POST" action="{{ url_for('conciliacao') }}" enctype="multipart/form-data">
+        <div class="grid-2 gap-2">
+            <div class="form-group">
+                <label><strong>🏦 Extrato Bancário</strong> (.csv, .xlsx, .ofx)</label>
+                <input type="file" name="arquivo_extrato" class="form-control" accept=".csv,.xlsx,.xls,.ofx">
+            </div>
+            <div class="form-group">
+                <label><strong>📄 Notas Fiscais / Sistema</strong> (.csv, .xlsx, .ofx)</label>
+                <input type="file" name="arquivo_notas" class="form-control" accept=".csv,.xlsx,.xls,.ofx">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2"><i class="bi bi-upload"></i> Carregar Arquivos</button>
+    </form>
+</div>
+
+<!-- TABELAS LADO A LADO -->
 <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+    <!-- CRÉDITOS -->
     <div class="card">
         <div class="card-header">
-            <i class="bi bi-arrow-up-circle text-success"></i> Créditos
-            <span style="font-size:0.8rem; color:#6b7280;">({{ creditos|length }})</span>
+            <i class="bi bi-arrow-up-circle text-success"></i> Créditos ({{ creditos|length }})
         </div>
         {% if creditos %}
         <table>
-            <thead>
-                <tr><th>Data</th><th>Descrição</th><th>Categoria</th><th class="text-right">Valor</th></tr>
-            </thead>
+            <thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th class="text-right">Valor</th></tr></thead>
             <tbody>
-                {% for t in creditos[:30] %}
+                {% for t in creditos %}
                 <tr>
                     <td>{{ t['data'] }}</td>
-                    <td>{{ t['descricao'][:35] + '...' if t['descricao']|length > 35 else t['descricao'] }}</td>
+                    <td>{{ t['descricao'][:40] }}</td>
                     <td>{{ t['categoria'] }}</td>
                     <td class="text-right text-success">R$ {{ "%.2f"|format(t['valor']) }}</td>
                 </tr>
@@ -42,21 +68,19 @@
         {% endif %}
     </div>
 
+    <!-- DÉBITOS -->
     <div class="card">
         <div class="card-header">
-            <i class="bi bi-arrow-down-circle text-danger"></i> Débitos
-            <span style="font-size:0.8rem; color:#6b7280;">({{ debitos|length }})</span>
+            <i class="bi bi-arrow-down-circle text-danger"></i> Débitos ({{ debitos|length }})
         </div>
         {% if debitos %}
         <table>
-            <thead>
-                <tr><th>Data</th><th>Descrição</th><th>Categoria</th><th class="text-right">Valor</th></tr>
-            </thead>
+            <thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th class="text-right">Valor</th></tr></thead>
             <tbody>
-                {% for t in debitos[:30] %}
+                {% for t in debitos %}
                 <tr>
                     <td>{{ t['data'] }}</td>
-                    <td>{{ t['descricao'][:35] + '...' if t['descricao']|length > 35 else t['descricao'] }}</td>
+                    <td>{{ t['descricao'][:40] }}</td>
                     <td>{{ t['categoria'] }}</td>
                     <td class="text-right text-danger">R$ {{ "%.2f"|format(t['valor']|abs) }}</td>
                 </tr>
@@ -69,9 +93,60 @@
     </div>
 </div>
 
-<div class="mt-3 text-center">
+<!-- GRÁFICO COMPARATIVO -->
+{% if creditos or debitos %}
+<div class="card mt-3">
+    <div class="card-header"><i class="bi bi-bar-chart"></i> Comparativo Mensal</div>
+    <canvas id="chartConciliacao" width="600" height="250"></canvas>
+</div>
+{% endif %}
+
+<!-- RECOMENDAÇÕES -->
+{% if recomendacoes %}
+<div class="card mt-3">
+    <div class="card-header"><i class="bi bi-lightbulb"></i> Recomendações</div>
+    {% for rec in recomendacoes %}
+    <p style="margin:5px 0;">{{ rec }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- BOTÕES DE AÇÃO -->
+<div class="mt-3 text-center flex gap-2" style="justify-content:center;">
     <a href="{{ url_for('download_conciliacao') }}" class="btn btn-primary">
         <i class="bi bi-download"></i> Baixar Conciliação (Excel)
     </a>
+    <a href="{{ url_for('download_csv') }}" class="btn btn-secondary">
+        <i class="bi bi-file-earmark-text"></i> Baixar CSV
+    </a>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+{% if creditos or debitos %}
+var ctx = document.getElementById('chartConciliacao').getContext('2d');
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Créditos', 'Débitos'],
+        datasets: [{
+            label: 'Valor Total (R$)',
+            data: [{{ total_creditos }}, {{ total_debitos }}],
+            backgroundColor: ['#059669', '#dc2626'],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            y: { beginAtZero: true }
+        }
+    }
+});
+{% endif %}
+</script>
 {% endblock %}
