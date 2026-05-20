@@ -20,26 +20,8 @@
     </div>
     <div class="card stat-card">
         <div class="stat-value">{{ conciliados }} / {{ total_itens }}</div>
-        <div class="stat-label">Itens Conciliados</div>
+        <div class="stat-label">Itens Conciliados ({{ "%.0f"|format(percentual) }}%)</div>
     </div>
-</div>
-
-<!-- UPLOAD DOS ARQUIVOS -->
-<div class="card mb-3">
-    <div class="card-header"><i class="bi bi-cloud-upload"></i> Importar Arquivos para Conciliação</div>
-    <form method="POST" action="{{ url_for('conciliacao') }}" enctype="multipart/form-data">
-        <div class="grid-2 gap-2">
-            <div class="form-group">
-                <label><strong>🏦 Extrato Bancário</strong> (.csv, .xlsx, .ofx)</label>
-                <input type="file" name="arquivo_extrato" class="form-control" accept=".csv,.xlsx,.xls,.ofx">
-            </div>
-            <div class="form-group">
-                <label><strong>📄 Notas Fiscais / Sistema</strong> (.csv, .xlsx, .ofx)</label>
-                <input type="file" name="arquivo_notas" class="form-control" accept=".csv,.xlsx,.xls,.ofx">
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary mt-2"><i class="bi bi-upload"></i> Carregar Arquivos</button>
-    </form>
 </div>
 
 <!-- TABELAS LADO A LADO -->
@@ -96,7 +78,7 @@
 <!-- GRÁFICO COMPARATIVO -->
 {% if creditos or debitos %}
 <div class="card mt-3">
-    <div class="card-header"><i class="bi bi-bar-chart"></i> Comparativo Mensal</div>
+    <div class="card-header"><i class="bi bi-bar-chart"></i> Comparativo</div>
     <canvas id="chartConciliacao" width="600" height="250"></canvas>
 </div>
 {% endif %}
@@ -111,7 +93,7 @@
 </div>
 {% endif %}
 
-<!-- BOTÕES DE AÇÃO -->
+<!-- BOTÕES -->
 <div class="mt-3 text-center flex gap-2" style="justify-content:center;">
     <a href="{{ url_for('download_conciliacao') }}" class="btn btn-primary">
         <i class="bi bi-download"></i> Baixar Conciliação (Excel)
@@ -139,12 +121,8 @@ new Chart(ctx, {
     },
     options: {
         responsive: true,
-        plugins: {
-            legend: { display: false }
-        },
-        scales: {
-            y: { beginAtZero: true }
-        }
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true } }
     }
 });
 {% endif %}

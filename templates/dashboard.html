@@ -5,6 +5,7 @@
 
 {% block head %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -22,28 +23,43 @@
         <div class="stat-label">Despesas</div>
     </div>
     <div class="card stat-card">
-        <div class="stat-value">R$ {{ "%.2f"|format(dash['saldo'] if dash else 0) }}</div>
+        <div class="stat-value {% if dash and dash['saldo'] >= 0 %}text-success{% else %}text-danger{% endif %}">
+            R$ {{ "%.2f"|format(dash['saldo'] if dash else 0) }}
+        </div>
         <div class="stat-label">Saldo</div>
     </div>
 </div>
 
 <div class="grid-2 mb-3">
-    <!-- GRÁFICO DESPESAS -->
+
+    <!-- ── DESPESAS — GRÁFICO DE COLUNAS ── -->
     <div class="card">
         <div class="card-header">
-            <i class="bi bi-pie-chart"></i> Top Despesas por Categoria
+            <i class="bi bi-bar-chart"></i> Top Despesas por Categoria
         </div>
         {% if dash and dash['top_categorias'] %}
-            <canvas id="chartDespesas" width="300" height="300" style="max-height:300px;"></canvas>
-            <table style="margin-top:10px;">
+            <!-- altura generosa para os rótulos não cortarem -->
+            <canvas id="chartDespesas" style="max-height:360px;"></canvas>
+            <table style="margin-top:14px;">
                 <thead>
-                    <tr><th>Categoria</th><th class="text-right">Valor</th><th class="text-right">%</th></tr>
+                    <tr>
+                        <th>Categoria</th>
+                        <th class="text-right">Valor</th>
+                        <th class="text-right">%</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {% for cat, val in dash['top_categorias'] %}
                     <tr>
-                        <td>{{ cat }}</td>
-                        <td class="text-right text-danger">R$ {{ "%.2f"|format(val) }}</td>
+                        <td>
+                            <!-- bolinha colorida igual à barra -->
+                            <span style="display:inline-block;width:10px;height:10px;border-radius:50%;
+                                         background:{{ ['#b91c1c','#dc2626','#ef4444','#f87171',
+                                                         '#fca5a5','#fecaca','#fee2e2','#fecdd3'][loop.index0] }};
+                                         margin-right:6px;"></span>
+                            {{ cat }}
+                        </td>
+                        <td class="text-right text-danger"><strong>R$ {{ "%.2f"|format(val) }}</strong></td>
                         <td class="text-right">
                             {{ "%.1f"|format(val / dash['total_despesas'] * 100) if dash['total_despesas'] > 0 else 0 }}%
                         </td>
@@ -56,16 +72,20 @@
         {% endif %}
     </div>
 
-    <!-- GRÁFICO RECEITAS -->
+    <!-- ── RECEITAS — GRÁFICO DONUT ── -->
     <div class="card">
         <div class="card-header">
-            <i class="bi bi-graph-up"></i> Receitas por Categoria
+            <i class="bi bi-pie-chart"></i> Receitas por Categoria
         </div>
         {% if dash and dash['categorias_rec'] %}
-            <canvas id="chartReceitas" width="300" height="300" style="max-height:300px;"></canvas>
-            <table style="margin-top:10px;">
+            <canvas id="chartReceitas" style="max-height:320px;"></canvas>
+            <table style="margin-top:14px;">
                 <thead>
-                    <tr><th>Categoria</th><th class="text-right">Valor</th><th class="text-right">%</th></tr>
+                    <tr>
+                        <th>Categoria</th>
+                        <th class="text-right">Valor</th>
+                        <th class="text-right">%</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {% for cat, val in dash['categorias_rec'].items() %}
@@ -80,26 +100,36 @@
                 </tbody>
             </table>
         {% else %}
-            <div class="empty-state"><i class="bi bi-calendar3"></i><p>Nenhuma receita</p></div>
+            <div class="empty-state"><i class="bi bi-pie-chart"></i><p>Nenhuma receita</p></div>
         {% endif %}
     </div>
 </div>
 
-<!-- TRANSAÇÕES -->
+<!-- ── TRANSAÇÕES ── -->
 <div class="card mb-3">
     <div class="flex-between mb-2">
         <div class="card-header" style="margin-bottom:0;">
             📋 Transações ({{ dash['qtd_transacoes'] if dash else 0 }})
         </div>
         <div class="flex gap-2">
-            <a href="{{ url_for('download_excel') }}" class="btn btn-secondary btn-sm"><i class="bi bi-file-earmark-excel"></i> Excel</a>
-            <a href="{{ url_for('download_csv') }}" class="btn btn-secondary btn-sm"><i class="bi bi-file-earmark-text"></i> CSV</a>
+            <a href="{{ url_for('download_excel') }}" class="btn btn-secondary btn-sm">
+                <i class="bi bi-file-earmark-excel"></i> Excel
+            </a>
+            <a href="{{ url_for('download_csv') }}" class="btn btn-secondary btn-sm">
+                <i class="bi bi-file-earmark-text"></i> CSV
+            </a>
         </div>
     </div>
     {% if dash and dash['transactions'] %}
         <table>
             <thead>
-                <tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Tipo</th><th class="text-right">Valor</th></tr>
+                <tr>
+                    <th>Data</th>
+                    <th>Descrição</th>
+                    <th>Categoria</th>
+                    <th>Tipo</th>
+                    <th class="text-right">Valor</th>
+                </tr>
             </thead>
             <tbody>
                 {% for t in dash['transactions'] %}
@@ -107,69 +137,166 @@
                     <td>{{ t['data'] }}</td>
                     <td>{{ t['descricao'][:60] }}</td>
                     <td>{{ t['categoria'] }}</td>
-                    <td><span class="badge {{ 'badge-success' if 'Crédito' in t['tipo'] else 'badge-danger' }}">{{ t['tipo'] }}</span></td>
-                    <td class="text-right {{ 'text-success' if 'Crédito' in t['tipo'] else 'text-danger' }}">R$ {{ "%.2f"|format(t['valor']|abs) }}</td>
+                    <td>
+                        <span class="badge {{ 'badge-success' if 'Crédito' in t['tipo'] else 'badge-danger' }}">
+                            {{ t['tipo'] }}
+                        </span>
+                    </td>
+                    <td class="text-right {{ 'text-success' if 'Crédito' in t['tipo'] else 'text-danger' }}">
+                        R$ {{ "%.2f"|format(t['valor']|abs) }}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+
+        <!-- Paginação -->
+        {% if dash['total_paginas'] > 1 %}
+        <div class="flex-center gap-2 mt-2">
+            {% if dash['pagina'] > 1 %}
+                <a href="?pagina={{ dash['pagina'] - 1 }}" class="btn btn-secondary btn-sm">‹ Anterior</a>
+            {% endif %}
+            <span style="font-size:0.85rem;color:#6b7280;">
+                Página {{ dash['pagina'] }} de {{ dash['total_paginas'] }}
+            </span>
+            {% if dash['pagina'] < dash['total_paginas'] %}
+                <a href="?pagina={{ dash['pagina'] + 1 }}" class="btn btn-secondary btn-sm">Próxima ›</a>
+            {% endif %}
+        </div>
+        {% endif %}
+
     {% else %}
         <div class="empty-state"><i class="bi bi-inbox"></i><p>Nenhuma transação</p></div>
     {% endif %}
 </div>
 
-<!-- UPLOAD -->
+<!-- ── UPLOAD ── -->
 <div class="card">
     <div class="card-header"><i class="bi bi-cloud-upload"></i> Upload de Arquivo</div>
+
     {% if files %}
     <div class="mb-2">
-        <strong>Arquivos:</strong>
+        <strong>Arquivos importados:</strong>
         <div class="flex flex-wrap gap-2 mt-1">
             {% for f in files %}
-            <span style="background:#ecfdf5;padding:0.25rem 0.75rem;border-radius:20px;font-size:0.8rem;">
+            <span style="background:#ecfdf5;padding:0.25rem 0.75rem;border-radius:20px;font-size:0.8rem;display:inline-flex;align-items:center;gap:0.4rem;">
+                <i class="bi bi-file-earmark-text" style="color:#059669;"></i>
                 {{ f['name'] }}
-                <a href="{{ url_for('remover_arquivo', filename=f['name']) }}" style="color:#dc2626;text-decoration:none;margin-left:0.25rem;">×</a>
+                <!-- ✅ FIX: remoção via POST, não GET -->
+                <form method="POST" action="{{ url_for('remover_arquivo') }}"
+                      style="display:inline;margin:0;"
+                      onsubmit="return confirm('Remover arquivo?')">
+                    <input type="hidden" name="filename" value="{{ f['name'] }}">
+                    <button type="submit"
+                            style="background:none;border:none;color:#dc2626;cursor:pointer;
+                                   font-size:1rem;padding:0;line-height:1;"
+                            title="Remover arquivo">×</button>
+                </form>
             </span>
             {% endfor %}
         </div>
     </div>
     {% endif %}
-    <form method="POST" action="{{ url_for('upload_file') }}" enctype="multipart/form-data" class="flex-center gap-2 flex-wrap">
-        <input type="file" name="file" class="form-control" style="max-width:300px;" accept=".xlsx,.xls,.csv,.ofx" required>
-        <button type="submit" class="btn btn-primary"><i class="bi bi-upload"></i> Enviar</button>
+
+    <form method="POST" action="{{ url_for('upload_file') }}"
+          enctype="multipart/form-data"
+          class="flex-center gap-2 flex-wrap">
+        <input type="file" name="file" class="form-control"
+               style="max-width:300px;"
+               accept=".xlsx,.xls,.csv,.ofx" required>
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-upload"></i> Enviar
+        </button>
     </form>
-    <p style="font-size:0.8rem;color:#6b7280;margin-top:0.5rem;">Formatos: .xlsx, .xls, .csv, .ofx</p>
+    <p style="font-size:0.8rem;color:#6b7280;margin-top:0.5rem;">Formatos aceitos: .xlsx, .xls, .csv, .ofx</p>
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-// Gráfico de Despesas
+Chart.register(ChartDataLabels);
+
+// ── Paleta de vermelhos do mais escuro (maior valor) ao mais claro ──
+const coresDesp = [
+    '#7f1d1d','#991b1b','#b91c1c','#dc2626',
+    '#ef4444','#f87171','#fca5a5','#fecaca'
+];
+
 {% if dash and dash['top_categorias'] %}
-var ctxDesp = document.getElementById('chartDespesas').getContext('2d');
+// ── Dados vindos do servidor ──
+const labelsDesp = [{% for cat, val in dash['top_categorias'] %}'{{ cat }}',{% endfor %}];
+const valoresDesp = [{% for cat, val in dash['top_categorias'] %}{{ val }},{% endfor %}];
+const totalDesp = {{ dash['total_despesas'] }};
+
+// Truncar rótulo longo para o eixo X (mantém nome completo no tooltip)
+const labelsEixo = labelsDesp.map(l => l.length > 14 ? l.slice(0, 13) + '…' : l);
+
+const ctxDesp = document.getElementById('chartDespesas').getContext('2d');
 new Chart(ctxDesp, {
-    type: 'doughnut',
+    type: 'bar',
+    plugins: [ChartDataLabels],
     data: {
-        labels: [{% for cat, val in dash['top_categorias'] %}'{{ cat }}',{% endfor %}],
+        labels: labelsEixo,
         datasets: [{
-            data: [{% for cat, val in dash['top_categorias'] %}{{ val }},{% endfor %}],
-            backgroundColor: ['#dc2626','#ef4444','#f87171','#fca5a5','#fecaca'],
-            borderWidth: 2
+            label: 'Despesas (R$)',
+            data: valoresDesp,
+            backgroundColor: coresDesp.slice(0, labelsDesp.length),
+            borderRadius: 4,
+            borderWidth: 0
         }]
     },
     options: {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
+        layout: { padding: { top: 28 } },   // espaço para o rótulo acima da barra
         plugins: {
-            legend: { position: 'bottom', labels: { font: { size: 11 } } }
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    title: (items) => labelsDesp[items[0].dataIndex],   // nome completo no hover
+                    label: (item) => {
+                        const pct = (item.raw / totalDesp * 100).toFixed(1);
+                        return ` R$ ${item.raw.toLocaleString('pt-BR',{minimumFractionDigits:2})}  (${pct}%)`;
+                    }
+                }
+            },
+            // ── Rótulos dentro/acima de cada barra ──
+            datalabels: {
+                anchor: 'end',
+                align: 'end',
+                color: '#1e293b',
+                font: { weight: 'bold', size: 11 },
+                formatter: (value) => {
+                    // Abreviar valores grandes: 2945 → R$2,9k
+                    if (value >= 1000) return 'R$' + (value/1000).toFixed(1) + 'k';
+                    return 'R$' + value.toLocaleString('pt-BR',{minimumFractionDigits:0});
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    font: { size: 11 },
+                    maxRotation: 35,
+                    minRotation: 25
+                },
+                grid: { display: false }
+            },
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: (v) => v >= 1000 ? 'R$' + (v/1000).toFixed(0) + 'k' : 'R$' + v
+                },
+                grid: { color: '#f1f5f9' }
+            }
         }
     }
 });
 {% endif %}
 
-// Gráfico de Receitas
+// ── Gráfico DONUT — Receitas ──
 {% if dash and dash['categorias_rec'] %}
-var ctxRec = document.getElementById('chartReceitas').getContext('2d');
+const ctxRec = document.getElementById('chartReceitas').getContext('2d');
 new Chart(ctxRec, {
     type: 'doughnut',
     data: {
@@ -177,14 +304,24 @@ new Chart(ctxRec, {
         datasets: [{
             data: [{% for cat, val in dash['categorias_rec'].items() %}{{ val }},{% endfor %}],
             backgroundColor: ['#059669','#10b981','#34d399','#6ee7b7','#a7f3d0','#d1fae5'],
-            borderWidth: 2
+            borderWidth: 2,
+            borderColor: '#fff'
         }]
     },
     options: {
         responsive: true,
         maintainAspectRatio: true,
         plugins: {
-            legend: { position: 'bottom', labels: { font: { size: 11 } } }
+            legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 12 } },
+            tooltip: {
+                callbacks: {
+                    label: (item) => {
+                        const total = item.dataset.data.reduce((a,b)=>a+b,0);
+                        const pct = (item.raw/total*100).toFixed(1);
+                        return ` R$ ${item.raw.toLocaleString('pt-BR',{minimumFractionDigits:2})}  (${pct}%)`;
+                    }
+                }
+            }
         }
     }
 });
