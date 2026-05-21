@@ -203,108 +203,191 @@ def categorizar(desc):
     return 'Outros'
 
 # ─────────────────────────────────────────────────────────────
-# PROCESSAMENTO DE ARQUIVOS (UNIFICADO - SUPORTA NUBANK)
+# PROCESSAMENTO DE ARQUIVOS (UNIVERSAL - TODOS OS BANCOS)
 # ─────────────────────────────────────────────────────────────
 def process_file(fp):
-    """Processa qualquer arquivo: OFX, Excel, CSV (incluindo Nubank DD/MM/AAAA)"""
+    """Processa qualquer arquivo: OFX (BB, Itaú, Bradesco, Santander, Inter, Nubank...), Excel, CSV"""
     ext = fp.rsplit('.', 1)[-1].lower()
     
     if ext == 'ofx':
+        txs = []
+        
+        # ═══ MÉTODO 1: ofxparse (OFX padrão) ═══
         try:
             with open(fp, 'r', encoding='utf-8', errors='ignore') as f:
+                content = f.read()
+            
+            # Corrige encoding problemático
+            content = content.replace('encoding="ISO-8859-1"', 'encoding="UTF-8"')
+            content = content.replace('encoding="US-ASCII"', 'encoding="UTF-8"')
+            
+            temp_path = fp + '.tmp'
+            with open(temp_path, 'w', encoding='utf-8') as f:
+                f.write(content)
+            
+            with open(temp_path, 'r', encoding='utf-8') as f:
                 ofx = ofxparse.OfxParser.parse(f)
-            out = []
+            
             for acc in ofx.accounts:
                 for t in acc.statement.transactions:
-                    v = float(t.amount)
-                    d = (t.memo or '')[:200]
-                    out.append({
+                    txs.append({
                         'data': str(t.date)[:10],
-                        'descricao': d,
-                        'valor': v,
-                        'tipo': 'Crédito' if v > 0 else 'Débito',
-                        'categoria': categorizar(d),
+                        'descricao': (t.memo or '')[:200],
+                        'valor': float(t.amount),
+                        'tipo': 'Crédito' if float(t.amount) > 0 else 'Débito',
+                        'categoria': categorizar(t.memo or ''),
                         'pago': False
                     })
-            return out
+            
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
+            
+            if txs:
+                print(f'OFX processado (método 1): {len(txs)} transações')
+                return txs
         except Exception as e:
-            print(f'Erro OFX: {e}')
-            return []
+            print(f'Método 1 falhou: {e}')
+        
+        # ═══ MÉTODO 2: XML direto (BB, Caixa, Sicoob, etc.) ═══
+        try:
+            import xml.etree.ElementTree as ET
+            
+            with open(fp, 'r', encoding='utf-8', errors='ignore') as f:
+                content = f.read()
+            
+            content = re.sub(r'<\?OFX.*?\?>', '', content, flags=re.DOTALL)
+            content = re.sub(r'</?OFX[^>]*>', '', content, flags=re.DOTALL)
+            content = re.sub(r'</?SONRS[^>]*>.*?</SONRS>', '', content, flags=re.DOTALL)
+            content = re.sub(r'</?SIGNONMSGS[^>]*>.*?</SIGNONMSGS>', '', content, flags=re.DOTALL)
+            
+            root = ET.fromstring(content)
+            
+            for trn in root.iter('STMTTRN'):
+                try:
+                    dt = trn.find('DTPOSTED') or trn.find('DTACCT')
+                    val = trn.find('TRNAMT')
+                    desc = trn.find('MEMO') or trn.find('NAME') or trn.find('PAYEE')
+                    
+                    data = 'N/A'
+                    if dt is not None and dt.text:
+                        raw = dt.text.strip()[:8]
+                        if len(raw) == 8:
+                            data = f'{raw[:4]}-{raw[4:6]}-{raw[6:8]}'
+                    
+                    valor = 0.0
+                    if val is not None and val.text:
+                        valor = float(val.text.replace(',', '.'))
+                    
+                    descricao = 'Sem descrição'
+                    if desc is not None and desc.text:
+                        descricao = desc.text.strip()[:200]
+                    
+                    txs.append({
+                        'data': data,
+                        'descricao': descricao,
+                        'valor': valor,
+                        'tipo': 'Crédito' if valor > 0 else 'Débito',
+                        'categoria': categorizar(descricao),
+                        'pago': False
+                    })
+                except:
+                    continue
+            
+            if txs:
+                print(f'OFX processado (método 2 - XML): {len(txs)} transações')
+                return txs
+        except Exception as e:
+            print(f'Método 2 falhou: {e}')
+        
+        # ═══ MÉTODO 3: Tentar como CSV (alguns bancos exportam OFX como CSV) ═══
+        try:
+            df = pd.read_csv(fp, sep=None, engine='python', encoding='utf-8')
+            txs = _process_dataframe(df)
+            if txs:
+                print(f'Arquivo processado como CSV: {len(txs)} transações')
+                return txs
+        except:
+            pass
+        
+        return txs
     
+    # ═══ EXCEL / CSV ═══
     try:
         if ext == 'csv':
-            try:
-                df = pd.read_csv(fp, sep=None, engine='python', encoding='utf-8')
-            except:
-                df = pd.read_csv(fp, sep=None, engine='python', encoding='latin-1')
+            for enc in ['utf-8', 'latin-1', 'iso-8859-1']:
+                try:
+                    df = pd.read_csv(fp, sep=None, engine='python', encoding=enc)
+                    break
+                except:
+                    continue
         elif ext in ['xlsx', 'xlsm']:
             df = pd.read_excel(fp, engine='openpyxl')
         else:
             df = pd.read_excel(fp, engine='xlrd')
         
-        df.columns = [str(c).strip().lower() for c in df.columns]
-        
-        col_d = next((c for c in df.columns if any(k in c for k in ['data', 'date', 'dt'])), None)
-        col_v = next((c for c in df.columns if any(k in c for k in ['valor', 'value', 'amount', 'montante'])), None)
-        
-        col_t = None
+        return _process_dataframe(df)
+    except Exception as e:
+        print(f'Erro Excel/CSV: {e}')
+        return []
+
+
+def _process_dataframe(df):
+    """Processa DataFrame pandas para lista de transações"""
+    df.columns = [str(c).strip().lower() for c in df.columns]
+    
+    col_d = next((c for c in df.columns if any(k in c for k in ['data', 'date', 'dt', 'dia'])), None)
+    col_v = next((c for c in df.columns if any(k in c for k in ['valor', 'value', 'amount', 'montante', 'total'])), None)
+    
+    col_t = None
+    for c in df.columns:
+        cl = c.lower()
+        if cl in ['descrição', 'descricao', 'historico', 'histórico', 'memo', 'complemento', 'detalhe', 'lançamento', 'lancamento']:
+            col_t = c
+            break
+    if not col_t:
         for c in df.columns:
             cl = c.lower()
-            if cl in ['descrição', 'descricao', 'descriçao', 'historico', 'histórico', 'memo', 'complemento']:
+            if ('descri' in cl or 'histor' in cl or 'lanc' in cl or 'memo' in cl) and 'identif' not in cl:
                 col_t = c
                 break
-        if not col_t:
-            for c in df.columns:
-                cl = c.lower()
-                if ('descri' in cl or 'histor' in cl or 'lancamento' in cl or 'lançamento' in cl) and 'identif' not in cl:
-                    col_t = c
-                    break
+    
+    out = []
+    for _, row in df.iterrows():
+        v = 0.0
+        if col_v:
+            try:
+                raw = str(row[col_v]).replace('R$', '').replace(' ', '').strip()
+                if raw not in ('', 'nan', 'None'):
+                    if ',' in raw and '.' in raw:
+                        raw = raw.replace('.', '').replace(',', '.') if raw.rfind(',') > raw.rfind('.') else raw.replace(',', '')
+                    elif ',' in raw:
+                        raw = raw.replace(',', '.')
+                    v = float(raw)
+            except:
+                v = 0.0
         
-        out = []
-        for _, row in df.iterrows():
-            v = 0.0
-            if col_v:
-                try:
-                    raw = str(row[col_v]).replace('R$', '').replace(' ', '').strip()
-                    if raw not in ('', 'nan'):
-                        if ',' in raw and '.' in raw:
-                            if raw.rfind(',') > raw.rfind('.'):
-                                raw = raw.replace('.', '').replace(',', '.')
-                            else:
-                                raw = raw.replace(',', '')
-                        elif ',' in raw:
-                            raw = raw.replace(',', '.')
-                        v = float(raw)
-                except:
-                    v = 0.0
-            
-            data = 'N/A'
-            if col_d:
-                raw_data = str(row[col_d]).strip()[:10]
-                if re.match(r'\d{2}/\d{2}/\d{4}', raw_data):
-                    partes = raw_data.split('/')
-                    data = f'{partes[2]}-{partes[1]}-{partes[0]}'
-                elif re.match(r'\d{4}-\d{2}-\d{2}', raw_data):
-                    data = raw_data
-                else:
-                    data = raw_data
-            
-            desc = 'Sem descrição'
-            if col_t:
-                desc = str(row[col_t])[:200]
-            
-            out.append({
-                'data': data,
-                'descricao': desc,
-                'valor': v,
-                'tipo': 'Crédito' if v > 0 else 'Débito',
-                'categoria': categorizar(desc),
-                'pago': False
-            })
-        return out
-    except Exception as e:
-        print(f'Erro processamento: {e}')
-        return []
+        data = 'N/A'
+        if col_d:
+            raw = str(row[col_d]).strip()[:10]
+            if re.match(r'\d{2}/\d{2}/\d{4}', raw):
+                p = raw.split('/')
+                data = f'{p[2]}-{p[1]}-{p[0]}'
+            elif re.match(r'\d{4}-\d{2}-\d{2}', raw):
+                data = raw
+            else:
+                data = raw
+        
+        desc = str(row[col_t])[:200] if col_t and str(row[col_t]) != 'nan' else 'Sem descrição'
+        
+        out.append({
+            'data': data,
+            'descricao': desc,
+            'valor': v,
+            'tipo': 'Crédito' if v > 0 else 'Débito',
+            'categoria': categorizar(desc),
+            'pago': False
+        })
+    return out
 
 # ─────────────────────────────────────────────────────────────
 # DASHBOARD DATA
