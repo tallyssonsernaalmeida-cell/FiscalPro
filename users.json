@@ -3,9 +3,25 @@
         "password": "scrypt:32768:8:1$ZsddA3Pcx3CQJJag$344327f77c036b8f2956816621e4e34cd5fddc378879d5a7b992e1fac9a9030d9cd7c8e4e0d545da83b8d9887c8daaa2a0f95b8a61f55fb5d843acd54dc4e7c5",
         "nome": "Administrador",
         "role": "admin",
-        "files": [],
+        "files": [
+            {
+                "name": "NU_679326497_01MAR2026_31MAR2026.csv",
+                "path": "uploads\\adminfiscal.app_20260520154123_NU_679326497_01MAR2026_31MAR2026.csv",
+                "type": "csv",
+                "date": "2026-05-20T15:41:23.307645"
+            }
+        ],
         "whatsapp": "",
         "created_at": "2026-05-19T16:05:59.979895",
+        "ativo": true
+    },
+    "tallyssonsernaalmeida@gmail.com": {
+        "password": "scrypt:32768:8:1$dVLo3yGmWXCUkGsH$1a92e0e73683ea40a5c357dda76708e2dd5d378d22a33a6206fde22b630faad424e90e55416037cc723c0027f3c09c25d9ea323de02fdf4073fd4f7f8fbedc10",
+        "nome": "Tallysson Serna Almeida",
+        "role": "admin",
+        "files": [],
+        "whatsapp": "65993330420",
+        "created_at": "2026-05-20T16:32:36.782264",
         "ativo": true
     }
 }
