@@ -203,42 +203,118 @@ def categorizar(desc):
     return 'Outros'
 
 # ─────────────────────────────────────────────────────────────
-# PROCESSAMENTO DE ARQUIVOS (UNIVERSAL - TODOS OS BANCOS + PDF)
+# PROCESSAMENTO DE ARQUIVOS (UNIVERSAL - TODOS OS BANCOS BRASILEIROS)
 # ─────────────────────────────────────────────────────────────
+
 def process_pdf(fp):
-    """Extrai texto de PDF e tenta identificar transações"""
+    """Extrai texto de PDF e identifica transações de QUALQUER banco"""
     try:
         from PyPDF2 import PdfReader
         reader = PdfReader(fp)
         texto_completo = ""
         for page in reader.pages:
             texto_completo += page.extract_text() + "\n"
+        
         txs = []
         linhas = texto_completo.split('\n')
-        for linha in linhas:
-            linha = linha.strip()
-            if not linha:
+        mes_ano = ""
+        
+        # Detecta mês/ano do extrato
+        for linha in linhas[:20]:
+            match = re.search(r'(janeiro|fevereiro|março|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)\s*/\s*(\d{4})', linha.lower())
+            if match:
+                meses = {'janeiro':'01','fevereiro':'02','março':'03','abril':'04','maio':'05','junho':'06',
+                        'julho':'07','agosto':'08','setembro':'09','outubro':'10','novembro':'11','dezembro':'12'}
+                mes_ano = f"{match.group(2)}-{meses.get(match.group(1), '01')}"
+                break
+        
+        if not mes_ano:
+            mes_ano = datetime.now().strftime('%Y-%m')
+        
+        i = 0
+        while i < len(linhas):
+            linha = linhas[i].strip()
+            
+            # Pula cabeçalhos
+            if not linha or any(x in linha for x in ['Pagina:', 'Extrato_PF', 'Data Descrição', 'PREZADO', 'SAC', 'Ouvidoria', 'Central de', 'Fale Conosco', 'Loja:', 'DEBITO VISA', 'segurança']):
+                i += 1
                 continue
-            valores = re.findall(r'(?:R\$\s*)?(\d{1,3}(?:\.\d{3})*,\d{2})', linha)
-            datas = re.findall(r'\d{2}/\d{2}/\d{4}', linha)
-            if valores and datas:
-                for val in valores:
+            
+            # Padrão: DD/MM DESCRIÇÃO VALOR (formato Santander/BB)
+            match = re.match(r'^(\d{2}/\d{2})\s+(.+)', linha)
+            if match:
+                dia_mes = match.group(1)
+                restante = match.group(2).strip()
+                
+                # Data completa
+                data = f"{mes_ano.split('-')[0]}-{mes_ano.split('-')[1]}-{dia_mes.split('/')[0]}"
+                
+                # Verificar se a próxima linha é continuação da descrição
+                if i+1 < len(linhas) and not re.match(r'^\d{2}/\d{2}', linhas[i+1]) and linhas[i+1].strip():
+                    restante += ' ' + linhas[i+1].strip()
+                    i += 1
+                
+                # Extrair valor do final da linha
+                valor = 0.0
+                # Procura por valores como: 12,00- ou 10,00 ou R$ 50,00
+                match_val = re.search(r'([\d.,]+)\s*[-–]?\s*$', restante)
+                if match_val:
+                    val_str = match_val.group(1).replace('.', '').replace(',', '.')
                     try:
-                        v = float(val.replace('.', '').replace(',', '.'))
-                        data = datas[0] if datas else 'N/A'
-                        if re.match(r'\d{2}/\d{2}/\d{4}', data):
-                            p = data.split('/')
-                            data = f'{p[2]}-{p[1]}-{p[0]}'
+                        valor = float(val_str)
+                        # Remove o valor da descrição
+                        desc = restante[:match_val.start()].strip()
+                    except:
+                        desc = restante
+                else:
+                    desc = restante
+                
+                # Verifica se é débito (termina com -)
+                if restante.rstrip().endswith('-'):
+                    valor = -abs(valor)
+                
+                # Categorizar
+                tipo = 'Crédito' if valor > 0 else 'Débito'
+                categoria = categorizar(desc)
+                
+                txs.append({
+                    'data': data,
+                    'descricao': desc[:200],
+                    'valor': valor,
+                    'tipo': tipo,
+                    'categoria': categoria,
+                    'pago': False
+                })
+            
+            # Padrão alternativo: DESCRIÇÃO VALOR DATA (formato Itaú/Bradesco)
+            else:
+                match_val = re.search(r'([\d.,]+)\s*[-–]?\s*$', linha)
+                match_data = re.search(r'\d{2}/\d{2}/\d{4}', linha)
+                if match_val and match_data:
+                    val_str = match_val.group(1).replace('.', '').replace(',', '.')
+                    try:
+                        valor = float(val_str)
+                        if linha.rstrip().endswith('-'):
+                            valor = -abs(valor)
+                        data_raw = match_data.group(0)
+                        p = data_raw.split('/')
+                        data = f'{p[2]}-{p[1]}-{p[0]}'
+                        desc = linha[:match_data.start()].strip() + ' ' + linha[match_data.end():match_val.start()].strip()
+                        desc = desc.strip()[:200] if desc.strip() else 'Sem descrição'
+                        
                         txs.append({
                             'data': data,
-                            'descricao': linha[:200],
-                            'valor': v,
-                            'tipo': 'Crédito' if v > 0 else 'Débito',
-                            'categoria': categorizar(linha),
+                            'descricao': desc,
+                            'valor': valor,
+                            'tipo': 'Crédito' if valor > 0 else 'Débito',
+                            'categoria': categorizar(desc),
                             'pago': False
                         })
                     except:
-                        continue
+                        pass
+            
+            i += 1
+        
         if txs:
             print(f'PDF processado: {len(txs)} transações encontradas')
         return txs
@@ -246,82 +322,108 @@ def process_pdf(fp):
         print(f'Erro PDF: {e}')
         return []
 
+
+def process_ofx_universal(fp):
+    """Processa OFX de qualquer banco brasileiro (BB, Itaú, Bradesco, Santander, etc.)"""
+    txs = []
+    
+    # Método 1: ofxparse
+    try:
+        with open(fp, 'r', encoding='utf-8', errors='ignore') as f:
+            content = f.read()
+        content = content.replace('encoding="ISO-8859-1"', 'encoding="UTF-8"')
+        content = content.replace('encoding="US-ASCII"', 'encoding="UTF-8"')
+        
+        temp_path = fp + '.tmp'
+        with open(temp_path, 'w', encoding='utf-8') as f:
+            f.write(content)
+        
+        with open(temp_path, 'r', encoding='utf-8') as f:
+            ofx = ofxparse.OfxParser.parse(f)
+        
+        for acc in ofx.accounts:
+            for t in acc.statement.transactions:
+                txs.append({
+                    'data': str(t.date)[:10],
+                    'descricao': (t.memo or '')[:200],
+                    'valor': float(t.amount),
+                    'tipo': 'Crédito' if float(t.amount) > 0 else 'Débito',
+                    'categoria': categorizar(t.memo or ''),
+                    'pago': False
+                })
+        
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
+        
+        if txs:
+            return txs
+    except:
+        pass
+    
+    # Método 2: XML direto
+    try:
+        import xml.etree.ElementTree as ET
+        with open(fp, 'r', encoding='utf-8', errors='ignore') as f:
+            content = f.read()
+        content = re.sub(r'<\?OFX.*?\?>', '', content, flags=re.DOTALL)
+        content = re.sub(r'</?OFX[^>]*>', '', content, flags=re.DOTALL)
+        root = ET.fromstring(content)
+        
+        for trn in root.iter('STMTTRN'):
+            try:
+                dt = trn.find('DTPOSTED') or trn.find('DTACCT')
+                val = trn.find('TRNAMT')
+                desc = trn.find('MEMO') or trn.find('NAME') or trn.find('PAYEE')
+                
+                data = 'N/A'
+                if dt is not None and dt.text:
+                    raw = dt.text.strip()[:8]
+                    if len(raw) == 8:
+                        data = f'{raw[:4]}-{raw[4:6]}-{raw[6:8]}'
+                
+                valor = 0.0
+                if val is not None and val.text:
+                    valor = float(val.text.replace(',', '.'))
+                
+                descricao = desc.text.strip()[:200] if desc is not None and desc.text else 'Sem descrição'
+                
+                txs.append({
+                    'data': data,
+                    'descricao': descricao,
+                    'valor': valor,
+                    'tipo': 'Crédito' if valor > 0 else 'Débito',
+                    'categoria': categorizar(descricao),
+                    'pago': False
+                })
+            except:
+                continue
+        
+        if txs:
+            return txs
+    except:
+        pass
+    
+    # Método 3: Tentar como CSV
+    try:
+        df = pd.read_csv(fp, sep=None, engine='python', encoding='utf-8')
+        result = _process_dataframe(df)
+        if result:
+            return result
+    except:
+        pass
+    
+    return txs
+
+
 def process_file(fp):
-    """Processa qualquer arquivo: OFX, PDF, Excel, CSV"""
+    """Processa qualquer arquivo: OFX, PDF, Excel, CSV - TODOS OS BANCOS"""
     ext = fp.rsplit('.', 1)[-1].lower()
     
-    # PDF
     if ext == 'pdf':
         return process_pdf(fp)
     
-    # OFX
     if ext == 'ofx':
-        txs = []
-        # Método 1: ofxparse
-        try:
-            with open(fp, 'r', encoding='utf-8', errors='ignore') as f:
-                content = f.read()
-            content = content.replace('encoding="ISO-8859-1"', 'encoding="UTF-8"')
-            content = content.replace('encoding="US-ASCII"', 'encoding="UTF-8"')
-            temp_path = fp + '.tmp'
-            with open(temp_path, 'w', encoding='utf-8') as f:
-                f.write(content)
-            with open(temp_path, 'r', encoding='utf-8') as f:
-                ofx = ofxparse.OfxParser.parse(f)
-            for acc in ofx.accounts:
-                for t in acc.statement.transactions:
-                    txs.append({
-                        'data': str(t.date)[:10],
-                        'descricao': (t.memo or '')[:200],
-                        'valor': float(t.amount),
-                        'tipo': 'Crédito' if float(t.amount) > 0 else 'Débito',
-                        'categoria': categorizar(t.memo or ''),
-                        'pago': False
-                    })
-            if os.path.exists(temp_path):
-                os.remove(temp_path)
-            if txs:
-                return txs
-        except Exception as e:
-            print(f'OFX método 1 falhou: {e}')
-        
-        # Método 2: XML direto
-        try:
-            import xml.etree.ElementTree as ET
-            with open(fp, 'r', encoding='utf-8', errors='ignore') as f:
-                content = f.read()
-            content = re.sub(r'<\?OFX.*?\?>', '', content, flags=re.DOTALL)
-            content = re.sub(r'</?OFX[^>]*>', '', content, flags=re.DOTALL)
-            root = ET.fromstring(content)
-            for trn in root.iter('STMTTRN'):
-                try:
-                    dt = trn.find('DTPOSTED') or trn.find('DTACCT')
-                    val = trn.find('TRNAMT')
-                    desc = trn.find('MEMO') or trn.find('NAME') or trn.find('PAYEE')
-                    data = 'N/A'
-                    if dt is not None and dt.text:
-                        raw = dt.text.strip()[:8]
-                        if len(raw) == 8:
-                            data = f'{raw[:4]}-{raw[4:6]}-{raw[6:8]}'
-                    valor = 0.0
-                    if val is not None and val.text:
-                        valor = float(val.text.replace(',', '.'))
-                    descricao = desc.text.strip()[:200] if desc is not None and desc.text else 'Sem descrição'
-                    txs.append({
-                        'data': data,
-                        'descricao': descricao,
-                        'valor': valor,
-                        'tipo': 'Crédito' if valor > 0 else 'Débito',
-                        'categoria': categorizar(descricao),
-                        'pago': False
-                    })
-                except:
-                    continue
-            if txs:
-                return txs
-        except Exception as e:
-            print(f'OFX método 2 falhou: {e}')
-        return txs
+        return process_ofx_universal(fp)
     
     # Excel / CSV
     try:
@@ -340,6 +442,7 @@ def process_file(fp):
     except Exception as e:
         print(f'Erro Excel/CSV: {e}')
         return []
+
 
 def _process_dataframe(df):
     """Processa DataFrame pandas para lista de transações"""
