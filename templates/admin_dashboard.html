@@ -19,6 +19,21 @@
     </div>
 </div>
 
+<!-- LINK DO SITE -->
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="bi bi-link-45deg"></i> Link do Sistema
+    </div>
+    <div style="display:flex;align-items:center;gap:0.5rem;background:#ecfdf5;padding:0.75rem 1rem;border-radius:8px;">
+        <input type="text" value="{{ site_url }}" id="siteUrl" readonly
+               style="flex:1;border:none;background:transparent;font-size:0.95rem;color:#059669;font-weight:500;">
+        <button onclick="navigator.clipboard.writeText(document.getElementById('siteUrl').value);alert('Link copiado!')"
+                class="btn btn-primary btn-sm">
+            <i class="bi bi-clipboard"></i> Copiar
+        </button>
+    </div>
+</div>
+
 <!-- USUÁRIOS -->
 <div class="card mb-3">
     <div class="flex-between mb-2">
@@ -30,8 +45,7 @@
         </button>
     </div>
 
-    <!-- Form criar usuário -->
-    <div id="form-criar" style="display:none; background:#f9fafb; padding:1rem; border-radius:8px; margin-bottom:1rem;">
+    <div id="form-criar" style="display:none;background:#f9fafb;padding:1rem;border-radius:8px;margin-bottom:1rem;">
         <form method="POST" action="{{ url_for('admin_criar_usuario') }}">
             <div class="grid-2 gap-2">
                 <div class="form-group">
@@ -55,7 +69,8 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary mt-2">Criar Usuário</button>
-            <button type="button" class="btn btn-secondary mt-2" onclick="document.getElementById('form-criar').style.display='none'">Cancelar</button>
+            <button type="button" class="btn btn-secondary mt-2"
+                    onclick="document.getElementById('form-criar').style.display='none'">Cancelar</button>
         </form>
     </div>
 
@@ -107,7 +122,7 @@
                                 <button type="submit" class="btn btn-sm btn-danger">Remover</button>
                             </form>
                             {% else %}
-                            <span style="font-size:0.75rem; color:#9ca3af;">Você</span>
+                            <span style="font-size:0.75rem;color:#9ca3af;">Você</span>
                             {% endif %}
                         </div>
                     </td>
@@ -117,10 +132,7 @@
         </table>
     </div>
     {% else %}
-    <div class="empty-state">
-        <i class="bi bi-people"></i>
-        <p>Nenhum usuário cadastrado</p>
-    </div>
+    <div class="empty-state"><i class="bi bi-people"></i><p>Nenhum usuário cadastrado</p></div>
     {% endif %}
 </div>
 
@@ -136,7 +148,7 @@
                 <th>Data/Hora</th>
                 <th>Usuário</th>
                 <th>Ação</th>
-                <th>Detalhe</th>
+                <th>IP / Detalhe</th>
             </tr>
         </thead>
         <tbody>
@@ -145,16 +157,14 @@
                 <td>{{ log['data'] }}</td>
                 <td>{{ log['usuario'] }}</td>
                 <td>{{ log['acao'] }}</td>
-                <td>{{ log['detalhe'] or '-' }}</td>
+                <!-- ✅ FIX 1: chave 'ip' (o app grava 'ip', não 'detalhe') -->
+                <td>{{ log.get('ip') or log.get('detalhe') or '-' }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     {% else %}
-    <div class="empty-state">
-        <i class="bi bi-journal-text"></i>
-        <p>Nenhum log registrado</p>
-    </div>
+    <div class="empty-state"><i class="bi bi-journal-text"></i><p>Nenhum log registrado</p></div>
     {% endif %}
 </div>
 
@@ -189,10 +199,7 @@
         </tbody>
     </table>
     {% else %}
-    <div class="empty-state">
-        <i class="bi bi-chat-dots"></i>
-        <p>Nenhuma mensagem de suporte</p>
-    </div>
+    <div class="empty-state"><i class="bi bi-chat-dots"></i><p>Nenhuma mensagem</p></div>
     {% endif %}
 </div>
 {% endblock %}
